@@ -1,10 +1,18 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:share_blog/project_colors.dart';
 import 'package:share_blog/splash_screen.dart';
 
 void main(List<String> args) {
-  runApp(const MyApp());
+  SystemChrome.setSystemUIOverlayStyle(const SystemUiOverlayStyle(
+    statusBarColor: SolidColors.statusBarColor,
+    statusBarIconBrightness: Brightness.dark,
+    systemNavigationBarColor: SolidColors.statusBarColor,
+    systemNavigationBarIconBrightness: Brightness.dark,
+  ));
+  runApp(MyApp());
 }
 
 class MyApp extends StatelessWidget {
@@ -12,17 +20,34 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const MaterialApp(
+    return MaterialApp(
+      theme: ThemeData(
+          textTheme: const TextTheme(
+              bodyLarge: TextStyle(
+                color: SolidColors.whiteTransparentColor,
+                fontFamily: 'vazir',
+                fontSize: 22,
+              ),
+              bodyMedium: TextStyle(
+                color: SolidColors.whiteTransparentColor,
+                fontFamily: 'vazir',
+                fontSize: 15,
+              ),
+              bodySmall: TextStyle(
+                color: SolidColors.blackTitles,
+                fontFamily: 'vazir',
+                fontSize: 15,
+              ))),
       debugShowCheckedModeBanner: false,
-      localizationsDelegates: [
+      localizationsDelegates: const [
         GlobalMaterialLocalizations.delegate,
         GlobalWidgetsLocalizations.delegate,
         GlobalCupertinoLocalizations.delegate,
       ],
-      supportedLocales: [
+      supportedLocales: const [
         Locale('fa'), // farsi
       ],
-      home: MyHomePage(),
+      home: const MyHomePage(),
     );
   }
 }
