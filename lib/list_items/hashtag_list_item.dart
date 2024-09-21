@@ -1,7 +1,9 @@
+// ignore_for_file: must_be_immutable
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:share_blog/models/project_models.dart';
-import 'package:share_blog/project_colors.dart';
+import 'package:share_blog/const_variabals.dart/project_colors.dart';
 
 class HashtagListItem extends StatelessWidget {
   late int index;
@@ -17,20 +19,17 @@ class HashtagListItem extends StatelessWidget {
           borderRadius: BorderRadius.all(Radius.circular(17)),
           gradient: GradientColors.categoriButtonsGradient,
         ),
-        child: Row(
-          children: [
-            const SizedBox(
-              width: 10,
-            ),
-            const Icon(color: SolidColors.whiteColor, Icons.tag_rounded),
-            const SizedBox(
-              width: 10,
-            ),
-            Text(hastagList[index].title),
-            const SizedBox(
-              width: 35,
-            ),
-          ],
+        child: Padding(
+          padding: const EdgeInsets.only(left: 9, right: 20),
+          child: Row(
+            children: [
+              const Icon(color: SolidColors.whiteColor, Icons.tag_rounded),
+              Text(hastagList[index].title),
+              const SizedBox(
+                width: 35,
+              ),
+            ],
+          ),
         ),
       ),
     );

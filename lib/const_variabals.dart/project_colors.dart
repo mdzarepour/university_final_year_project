@@ -37,4 +37,20 @@ class GradientColors {
         Color.fromARGB(120, 72, 20, 88),
         Color.fromARGB(255, 28, 20, 81),
       ]);
+  static const Gradient blogsListviewGradientColor = LinearGradient(
+      begin: Alignment.center,
+      end: Alignment.bottomCenter,
+      colors: [
+        Color.fromARGB(0, 255, 255, 255),
+        Color.fromARGB(2550, 0, 0, 0),
+      ]);
+  static const Gradient bottumNavigationBackgroundGradientColor =
+      LinearGradient(
+          begin: Alignment.bottomCenter,
+          end: Alignment.topCenter,
+          colors: [
+        Color.fromARGB(255, 255, 255, 255),
+        Color.fromARGB(180, 255, 255, 255),
+        Color.fromARGB(0, 255, 255, 255),
+      ]);
 }

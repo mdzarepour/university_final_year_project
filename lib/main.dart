@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
-import 'package:share_blog/project_colors.dart';
+import 'package:share_blog/const_variabals.dart/project_colors.dart';
 import 'package:share_blog/splash_screen.dart';
 
 void main(List<String> args) {
@@ -12,7 +12,7 @@ void main(List<String> args) {
     systemNavigationBarColor: SolidColors.statusBarColor,
     systemNavigationBarIconBrightness: Brightness.dark,
   ));
-  runApp(MyApp());
+  runApp(const MyApp());
 }
 
 class MyApp extends StatelessWidget {
@@ -22,22 +22,33 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       theme: ThemeData(
-          textTheme: const TextTheme(
-              bodyLarge: TextStyle(
-                color: SolidColors.whiteTransparentColor,
-                fontFamily: 'vazir',
-                fontSize: 22,
-              ),
-              bodyMedium: TextStyle(
-                color: SolidColors.whiteTransparentColor,
-                fontFamily: 'vazir',
-                fontSize: 15,
-              ),
-              bodySmall: TextStyle(
-                color: SolidColors.blackTitles,
-                fontFamily: 'vazir',
-                fontSize: 15,
-              ))),
+        appBarTheme: const AppBarTheme(
+          elevation: 0,
+          backgroundColor: SolidColors.scaffoldBackgroundColor,
+        ),
+        textTheme: const TextTheme(
+            bodyLarge: TextStyle(
+              color: SolidColors.whiteTransparentColor,
+              fontFamily: 'vazir',
+              fontSize: 22,
+            ),
+            bodyMedium: TextStyle(
+              color: SolidColors.whiteTransparentColor,
+              fontFamily: 'vazir',
+              fontSize: 15,
+            ),
+            bodySmall: TextStyle(
+              color: SolidColors.blackTitles,
+              fontFamily: 'vazir',
+              fontSize: 15,
+            ),
+            headlineMedium: TextStyle(
+              fontWeight: FontWeight.w700,
+              color: SolidColors.blueLinkTitles,
+              fontFamily: 'vazir',
+              fontSize: 17,
+            )),
+      ),
       debugShowCheckedModeBanner: false,
       localizationsDelegates: const [
         GlobalMaterialLocalizations.delegate,
