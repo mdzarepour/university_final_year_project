@@ -3,7 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:share_blog/const_variabals.dart/project_colors.dart';
-import 'package:share_blog/splash_screen.dart';
+import 'package:share_blog/screens/splash_screen.dart';
 
 void main(List<String> args) {
   SystemChrome.setSystemUIOverlayStyle(const SystemUiOverlayStyle(

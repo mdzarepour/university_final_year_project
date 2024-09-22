@@ -1,7 +1,7 @@
 //Hastag class
-import 'package:flutter/cupertino.dart';
 import 'package:share_blog/gen/assets.gen.dart';
 
+//pooster Data
 Map fakePosterData = {
   "imageAsset": Assets.images.programming.path,
   "writerName": "ملیکا عزیزی",
@@ -19,6 +19,7 @@ class HastagModel {
   });
 }
 
+//hashtags Model
 List<HastagModel> hastagList = [
   HastagModel(title: "جاوا"),
   HastagModel(title: "کاتلین"),
@@ -106,6 +107,7 @@ List<BlogModels> blogList = [
       views: '250'),
 ];
 
+//podcasts model
 class PodcastModel {
   late String id;
   late String imageUrl;
