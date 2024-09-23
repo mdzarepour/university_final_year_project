@@ -5,6 +5,7 @@ class ProjectStrings {
   static const String seeHotestPodcasts = "مشاهده داغ ترین پادکست ها ";
   static const String relatedBlogs = "نوشته های مرتبط";
   static const String podcastList = "لیست پادکست ها";
+  static const String go = "بزن بریم";
   static const String blogsList = "لیست مقاله ها";
   static const String countinue = "ادامه";
   static const String mangePodcasts = "مدیریت پادکست ها";
@@ -15,4 +16,8 @@ class ProjectStrings {
   static const String addNewPodcast = "اضافه کردن یه پادکست جدید";
   static const String addNewBlog = "اضافه کردن یه مقاله جدید";
   static const String later = "بعدا";
+  static const String welcome = """به تک‌بلاگ خوش اومدی
+
+برای ارسال مطلب و پادکست باید حتما 
+ثبت نام کنی """;
 }

@@ -1,5 +1,5 @@
 //Hastag class
-import 'package:share_blog/gen/assets.gen.dart';
+import 'package:tech_blog/gen/assets.gen.dart';
 
 //pooster Data
 Map fakePosterData = {

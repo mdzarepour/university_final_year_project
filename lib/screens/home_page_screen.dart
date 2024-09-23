@@ -1,12 +1,12 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:share_blog/const_variabals.dart/project_colors.dart';
-import 'package:share_blog/const_variabals.dart/strings.dart';
-import 'package:share_blog/gen/assets.gen.dart';
-import 'package:share_blog/list_items/blog-list-item.dart';
-import 'package:share_blog/list_items/hashtag_list_item.dart';
-import 'package:share_blog/list_items/podcast_list_item.dart';
-import 'package:share_blog/models/project_models.dart';
+import 'package:tech_blog/const_variabals.dart/project_colors.dart';
+import 'package:tech_blog/const_variabals.dart/strings.dart';
+import 'package:tech_blog/gen/assets.gen.dart';
+import 'package:tech_blog/list_items/blog_list_item.dart';
+import 'package:tech_blog/list_items/hashtag_list_item.dart';
+import 'package:tech_blog/list_items/podcast_list_item.dart';
+import 'package:tech_blog/models/project_models.dart';
 
 class HomePageScreen extends StatelessWidget {
   const HomePageScreen({
@@ -127,7 +127,7 @@ class SeeMore extends StatelessWidget {
       children: [
         ImageIcon(
             color: SolidColors.blueLinkTitles,
-            Assets.images.a2710222.provider()),
+            Assets.icons.a2710222.provider()),
         const SizedBox(
           width: 12,
         ),

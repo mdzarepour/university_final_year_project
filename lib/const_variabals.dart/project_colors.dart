@@ -13,6 +13,7 @@ class SolidColors {
   static const Color purpleTitles = Color.fromARGB(255, 66, 4, 87);
   static const Color greyNameColor = Color.fromARGB(255, 197, 197, 197);
   static const Color purpleButtomColor = Color.fromARGB(255, 66, 4, 87);
+  static const Color purpleButtomColor2 = Color.fromARGB(255, 80, 11, 103);
   static const Color orangeSelectedPodcastColor =
       Color.fromARGB(255, 255, 139, 26);
 }

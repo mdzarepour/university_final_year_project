@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter/widgets.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
-import 'package:share_blog/const_variabals.dart/project_colors.dart';
-import 'package:share_blog/screens/splash_screen.dart';
+import 'package:tech_blog/const_variabals.dart/project_colors.dart';
+import 'package:tech_blog/screens/splash_screen.dart';
 
 void main(List<String> args) {
   SystemChrome.setSystemUIOverlayStyle(const SystemUiOverlayStyle(
@@ -22,6 +21,28 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       theme: ThemeData(
+        elevatedButtonTheme: ElevatedButtonThemeData(
+          style: ButtonStyle(
+            shape: const WidgetStatePropertyAll(
+              RoundedRectangleBorder(
+                borderRadius: BorderRadius.all(
+                  Radius.circular(8),
+                ),
+              ),
+            ),
+            alignment: AlignmentDirectional.center,
+            backgroundColor: WidgetStateProperty.resolveWith(
+              (states) {
+                if (states.contains(WidgetState.pressed)) {
+                  return SolidColors.purpleButtomColor2;
+                } else {
+                  return SolidColors.purpleButtomColor;
+                }
+              },
+            ),
+            fixedSize: const WidgetStatePropertyAll(Size(200, 60)),
+          ),
+        ),
         appBarTheme: const AppBarTheme(
           elevation: 0,
           backgroundColor: SolidColors.scaffoldBackgroundColor,

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:share_blog/const_variabals.dart/project_colors.dart';
-import 'package:share_blog/models/project_models.dart';
+import 'package:tech_blog/const_variabals.dart/project_colors.dart';
+import 'package:tech_blog/models/project_models.dart';
 
 class PodcastListItem extends StatelessWidget {
   final BuildContext context;

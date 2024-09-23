@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:share_blog/gen/assets.gen.dart';
-import 'package:share_blog/const_variabals.dart/project_colors.dart';
+import 'package:tech_blog/gen/assets.gen.dart';
+import 'package:tech_blog/const_variabals.dart/project_colors.dart';
 import 'package:hugeicons/hugeicons.dart';
-import 'package:share_blog/screens/home_page_screen.dart';
-import 'package:share_blog/screens/profile_screen.dart';
-import 'package:share_blog/screens/writeScreen.dart';
+import 'package:tech_blog/screens/home_page_screen.dart';
+import 'package:tech_blog/screens/profile_screen.dart';
+import 'package:tech_blog/screens/register_intro.dart';
 
 class MainScreen extends StatefulWidget {
   const MainScreen({super.key});
@@ -41,9 +41,9 @@ class _MainScreenState extends State<MainScreen> {
             IndexedStack(
               index: _selectedIndex,
               children: [
+                const RegisterIntro(),
                 HomePageScreen(size: size, theme: theme),
                 ProfileScreen(size: size, theme: theme),
-                WriteScreen(),
               ],
             ),
             BottumNavigationBar(changeScreen: (int value) {
@@ -59,8 +59,8 @@ class _MainScreenState extends State<MainScreen> {
 }
 
 class BottumNavigationBar extends StatelessWidget {
-  Function(int) changeScreen;
-  BottumNavigationBar({
+  final Function(int) changeScreen;
+  const BottumNavigationBar({
     required this.changeScreen,
     super.key,
   });
@@ -96,7 +96,7 @@ class BottumNavigationBar extends StatelessWidget {
                     },
                     icon: ImageIcon(
                       color: SolidColors.whiteColor,
-                      Assets.images.icon.provider(),
+                      Assets.icons.icon.provider(),
                     ),
                   ),
                   IconButton(
@@ -105,7 +105,7 @@ class BottumNavigationBar extends StatelessWidget {
                     },
                     icon: ImageIcon(
                       color: SolidColors.whiteColor,
-                      Assets.images.w.provider(),
+                      Assets.icons.w.provider(),
                     ),
                   ),
                   IconButton(
@@ -114,7 +114,7 @@ class BottumNavigationBar extends StatelessWidget {
                     },
                     icon: ImageIcon(
                       color: SolidColors.whiteColor,
-                      Assets.images.user.provider(),
+                      Assets.icons.user.provider(),
                     ),
                   ),
                 ],

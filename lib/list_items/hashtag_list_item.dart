@@ -1,14 +1,12 @@
-// ignore_for_file: must_be_immutable
-
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:share_blog/models/project_models.dart';
-import 'package:share_blog/const_variabals.dart/project_colors.dart';
+import 'package:tech_blog/models/project_models.dart';
+import 'package:tech_blog/const_variabals.dart/project_colors.dart';
 
 class HashtagListItem extends StatelessWidget {
-  late int index;
-  BuildContext context;
-  HashtagListItem({super.key, required this.index, required this.context});
+  final int index;
+  final BuildContext context;
+  const HashtagListItem(
+      {super.key, required this.index, required this.context});
   @override
   Widget build(BuildContext context) {
     return Padding(

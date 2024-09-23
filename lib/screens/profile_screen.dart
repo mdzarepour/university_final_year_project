@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:share_blog/const_variabals.dart/project_colors.dart';
-import 'package:share_blog/const_variabals.dart/strings.dart';
-import 'package:share_blog/gen/assets.gen.dart';
+import 'package:tech_blog/const_variabals.dart/project_colors.dart';
+import 'package:tech_blog/const_variabals.dart/strings.dart';
+import 'package:tech_blog/gen/assets.gen.dart';
 
 class ProfileScreen extends StatelessWidget {
   const ProfileScreen({
@@ -33,7 +33,7 @@ class ProfileScreen extends StatelessWidget {
                 children: [
                   ImageIcon(
                       color: SolidColors.blueLinkTitles,
-                      Assets.images.a2710222.provider()),
+                      Assets.icons.a2710222.provider()),
                   const SizedBox(
                     width: 10,
                   ),
@@ -85,8 +85,8 @@ class ProfileScreen extends StatelessWidget {
 }
 
 class ProfileScreenWidget extends StatelessWidget {
-  final size;
-  final text;
+  final dynamic size;
+  final String text;
   const ProfileScreenWidget(
       {required this.text, required this.size, super.key});
 
