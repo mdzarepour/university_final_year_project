@@ -16,6 +16,9 @@ class ProjectStrings {
   static const String addNewPodcast = "اضافه کردن یه پادکست جدید";
   static const String addNewBlog = "اضافه کردن یه مقاله جدید";
   static const String later = "بعدا";
+  static const String complateYourInformation =
+      """تبریک میگم ، ایمیل با موفقیت تایید شد
+لطفا اطلاعات ثبت نام رو کامل کن""";
   static const String welcome = """به تک‌بلاگ خوش اومدی
 
 برای ارسال مطلب و پادکست باید حتما 

@@ -155,6 +155,7 @@ class TagsListView extends StatelessWidget {
         scrollDirection: Axis.horizontal,
         itemBuilder: (context, index) {
           return HashtagListItem(
+            listForDate: hastagList,
             index: index,
             context: context,
           );

@@ -52,6 +52,14 @@ class GradientColors {
           colors: [
         Color.fromARGB(255, 255, 255, 255),
         Color.fromARGB(180, 255, 255, 255),
-        Color.fromARGB(0, 255, 255, 255),
+        Color.fromARGB(0, 214, 214, 214),
+      ]);
+  static const Gradient selectedTagsBackground = LinearGradient(
+      begin: Alignment.bottomCenter,
+      end: Alignment.topCenter,
+      colors: [
+        Color.fromARGB(255, 177, 177, 177),
+        Color.fromARGB(255, 177, 177, 177),
+        Color.fromARGB(255, 177, 177, 177),
       ]);
 }

@@ -18,6 +18,9 @@ class $AssetsIconsGen {
   /// File path: assets/icons/2710222.png
   AssetGenImage get a2710222 => const AssetGenImage('assets/icons/2710222.png');
 
+  /// File path: assets/icons/64616.png
+  AssetGenImage get a64616 => const AssetGenImage('assets/icons/64616.png');
+
   /// File path: assets/icons/icon.png
   AssetGenImage get icon => const AssetGenImage('assets/icons/icon.png');
 
@@ -31,7 +34,7 @@ class $AssetsIconsGen {
   AssetGenImage get w => const AssetGenImage('assets/icons/w.png');
 
   /// List of all assets
-  List<dynamic> get values => [a2710222, icon, techBot, user, w];
+  List<dynamic> get values => [a2710222, a64616, icon, techBot, user, w];
 }
 
 class $AssetsImagesGen {

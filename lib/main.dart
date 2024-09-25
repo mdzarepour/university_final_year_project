@@ -21,6 +21,20 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       theme: ThemeData(
+        inputDecorationTheme: const InputDecorationTheme(
+          contentPadding: EdgeInsets.symmetric(horizontal: 20),
+          hintStyle: TextStyle(
+            color: Color.fromARGB(92, 88, 86, 86),
+          ),
+          border: OutlineInputBorder(
+            borderSide: BorderSide(
+              color: Color.fromARGB(255, 112, 112, 112),
+            ),
+            borderRadius: BorderRadius.all(
+              Radius.circular(9),
+            ),
+          ),
+        ),
         elevatedButtonTheme: ElevatedButtonThemeData(
           style: ButtonStyle(
             shape: const WidgetStatePropertyAll(

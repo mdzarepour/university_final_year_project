@@ -9,6 +9,7 @@ Map fakePosterData = {
   "articleName": "دوازده قدم برنامه نویسی که ...",
   "date": "چند روز پیش",
 };
+List faceSelectedTagsData = [];
 
 class HastagModel {
   late String title;
@@ -21,6 +22,11 @@ class HastagModel {
 
 //hashtags Model
 List<HastagModel> hastagList = [
+  HastagModel(title: "مهندسی داده"),
+  HastagModel(title: "دیتابیس"),
+  HastagModel(title: "اندروید"),
+  HastagModel(title: "ری اکت"),
+  HastagModel(title: "پایتون"),
   HastagModel(title: "جاوا"),
   HastagModel(title: "کاتلین"),
   HastagModel(title: "وب"),

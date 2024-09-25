@@ -6,6 +6,8 @@ import 'package:tech_blog/screens/home_page_screen.dart';
 import 'package:tech_blog/screens/profile_screen.dart';
 import 'package:tech_blog/screens/register_intro.dart';
 
+final GlobalKey<ScaffoldState> _key = GlobalKey();
+
 class MainScreen extends StatefulWidget {
   const MainScreen({super.key});
 
@@ -21,11 +23,18 @@ class _MainScreenState extends State<MainScreen> {
     final size = MediaQuery.of(context).size;
 
     return Scaffold(
+      key: _key,
+      drawer: const DrawerMenu(),
       appBar: AppBar(
+        automaticallyImplyLeading: false,
         title: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            Icon(size: size.height / 40, HugeIcons.strokeRoundedMenu02),
+            InkWell(
+              onTap: () => _key.currentState!.openDrawer(),
+              child:
+                  Icon(size: size.height / 40, HugeIcons.strokeRoundedMenu02),
+            ),
             Image(
               height: size.height / 13.6,
               image: Assets.images.a1.provider(),
@@ -41,9 +50,9 @@ class _MainScreenState extends State<MainScreen> {
             IndexedStack(
               index: _selectedIndex,
               children: [
+                ProfileScreen(size: size, theme: theme),
                 const RegisterIntro(),
                 HomePageScreen(size: size, theme: theme),
-                ProfileScreen(size: size, theme: theme),
               ],
             ),
             BottumNavigationBar(changeScreen: (int value) {
@@ -51,6 +60,74 @@ class _MainScreenState extends State<MainScreen> {
                 _selectedIndex = value;
               });
             }),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+class DrawerMenu extends StatelessWidget {
+  const DrawerMenu({
+    super.key,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Drawer(
+      width: MediaQuery.of(context).size.width - 80,
+      shape: const ContinuousRectangleBorder(
+        borderRadius: BorderRadius.all(Radius.zero),
+      ),
+      backgroundColor: SolidColors.scaffoldBackgroundColor,
+      child: Padding(
+        padding: const EdgeInsets.only(left: 30, right: 40),
+        child: ListView(
+          children: [
+            DrawerHeader(
+              curve: Curves.easeIn,
+              child: Image.asset(scale: 3, Assets.images.a1.path),
+            ),
+            ListTile(
+              title: Text(
+                  style: Theme.of(context)
+                      .textTheme
+                      .bodyMedium!
+                      .copyWith(color: SolidColors.blackTitles),
+                  "پروفایل کاربری"),
+              onTap: () {},
+            ),
+            const Divider(),
+            ListTile(
+              title: Text(
+                  style: Theme.of(context)
+                      .textTheme
+                      .bodyMedium!
+                      .copyWith(color: SolidColors.blackTitles),
+                  "درباره تک بلاگ"),
+              onTap: () {},
+            ),
+            const Divider(),
+            ListTile(
+              title: Text(
+                  style: Theme.of(context)
+                      .textTheme
+                      .bodyMedium!
+                      .copyWith(color: SolidColors.blackTitles),
+                  "اشتراک گذاری تک بلاگ"),
+              onTap: () {},
+            ),
+            const Divider(),
+            ListTile(
+              title: Text(
+                  style: Theme.of(context)
+                      .textTheme
+                      .bodyMedium!
+                      .copyWith(color: SolidColors.blackTitles),
+                  "تک بلاگ در گیت هاب"),
+              onTap: () {},
+            ),
+            const Divider(),
           ],
         ),
       ),
@@ -92,7 +169,7 @@ class BottumNavigationBar extends StatelessWidget {
                 children: [
                   IconButton(
                     onPressed: () {
-                      changeScreen(0);
+                      changeScreen(2);
                     },
                     icon: ImageIcon(
                       color: SolidColors.whiteColor,
@@ -101,7 +178,7 @@ class BottumNavigationBar extends StatelessWidget {
                   ),
                   IconButton(
                     onPressed: () {
-                      changeScreen(2);
+                      changeScreen(1);
                     },
                     icon: ImageIcon(
                       color: SolidColors.whiteColor,
@@ -110,7 +187,7 @@ class BottumNavigationBar extends StatelessWidget {
                   ),
                   IconButton(
                     onPressed: () {
-                      changeScreen(1);
+                      changeScreen(0);
                     },
                     icon: ImageIcon(
                       color: SolidColors.whiteColor,
