@@ -1,3 +1,5 @@
+import 'package:tech_blog/components/api_constants.dart';
+
 class ArticleModel {
   late String id;
   late String title;
@@ -22,7 +24,7 @@ class ArticleModel {
   ArticleModel.fromJson(Map<String, dynamic> element) {
     id = element["id"];
     title = element["title"];
-    imagePath = element["image"];
+    imagePath = ApiConstants.hostDonwload + element["image"];
     catId = element["cat_id"];
     catName = element["cat_name"];
     author = element["author"];

@@ -1,14 +1,16 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:tech_blog/components/api_constants.dart';
+import 'package:get/get.dart';
 import 'package:tech_blog/components/project_colors.dart';
 import 'package:tech_blog/components/strings.dart';
+import 'package:tech_blog/controller/home_screen_controller.dart';
 import 'package:tech_blog/gen/assets.gen.dart';
 import 'package:tech_blog/components/blog_list_item.dart';
 import 'package:tech_blog/components/hashtag_list_item.dart';
 import 'package:tech_blog/components/podcast_list_item.dart';
 import 'package:tech_blog/models/project_models.dart';
-import 'package:tech_blog/services/dio_services.dart';
+
+HomeScreenController homeScreenController = Get.put(HomeScreenController());
 
 class HomePageScreen extends StatelessWidget {
   const HomePageScreen({
@@ -80,9 +82,13 @@ class PodcastsListView extends StatelessWidget {
       width: double.maxFinite,
       child: ListView.builder(
         scrollDirection: Axis.horizontal,
-        itemCount: podcastList.length,
+        itemCount: homeScreenController.topPodcastList.length,
         itemBuilder: (context, index) {
-          return PodcastListItem(context: context, index: index);
+          return PodcastListItem(
+            controller: homeScreenController,
+            context: context,
+            index: index,
+          );
         },
       ),
     );
@@ -103,10 +109,11 @@ class BlogsListView extends StatelessWidget {
       width: double.maxFinite,
       height: size.height / 6,
       child: ListView.builder(
-        itemCount: blogList.length,
+        itemCount: homeScreenController.topVisitedList.length,
         scrollDirection: Axis.horizontal,
         itemBuilder: (context, index) {
           return BlogListItem(
+            controller: homeScreenController,
             index: index,
             context: context,
           );
@@ -153,10 +160,11 @@ class TagsListView extends StatelessWidget {
       height: size.height / 21,
       width: 500,
       child: ListView.builder(
-        itemCount: hastagList.length,
+        itemCount: homeScreenController.tagList.length,
         scrollDirection: Axis.horizontal,
         itemBuilder: (context, index) {
           return HashtagListItem(
+            controller: homeScreenController,
             listForDate: hastagList,
             index: index,
             context: context,

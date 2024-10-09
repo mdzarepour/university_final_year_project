@@ -198,7 +198,7 @@ class DrawerMenu extends StatelessWidget {
                       .copyWith(color: SolidColors.blackTitles),
                   "اشتراک گذاری تک بلاگ"),
               onTap: () async {
-                Share.share(ProjectStrings.ShareTechBlog);
+                Share.share(ProjectStrings.shareTechBlog);
               },
             ),
             const Divider(

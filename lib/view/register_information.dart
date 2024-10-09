@@ -71,7 +71,7 @@ class _RegisterInformationState extends State<RegisterInformation> {
                       Navigator.pushReplacement(
                           context,
                           CupertinoPageRoute(
-                            builder: (context) => WriteBlog(),
+                            builder: (context) => const WriteBlog(),
                           ));
                     },
                     child: Text(

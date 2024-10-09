@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:url_launcher/url_launcher.dart';
 
 class PublicFunctions {}
@@ -7,6 +9,6 @@ Future urlLuncher(String url) async {
   if (!await canLaunchUrl(uri)) {
     launchUrl(uri);
   } else {
-    print("not found");
+    log("url is not found this time ; => $uri");
   }
 }

@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
-
 import 'package:tech_blog/components/project_colors.dart';
+import 'package:tech_blog/controller/home_screen_controller.dart';
 
 class HashtagListItem extends StatelessWidget {
+  final HomeScreenController? controller;
   final int index;
   final List listForDate;
   final BuildContext context;
@@ -11,6 +12,7 @@ class HashtagListItem extends StatelessWidget {
     required this.listForDate,
     required this.index,
     required this.context,
+    required this.controller,
   });
   @override
   Widget build(BuildContext context) {
@@ -32,7 +34,7 @@ class HashtagListItem extends StatelessWidget {
                 const Icon(color: SolidColors.whiteColor, Icons.tag_rounded),
                 Padding(
                   padding: const EdgeInsets.only(left: 10),
-                  child: Text(listForDate[index].title),
+                  child: Text(controller!.tagList[index].title),
                 ),
               ],
             ),

@@ -1,11 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:tech_blog/components/project_colors.dart';
-import 'package:tech_blog/models/project_models.dart';
+import 'package:tech_blog/controller/home_screen_controller.dart';
 
 class BlogListItem extends StatelessWidget {
+  final HomeScreenController controller;
   final BuildContext context;
   final int index;
-  const BlogListItem({required this.index, required this.context, super.key});
+  const BlogListItem(
+      {required this.controller,
+      required this.index,
+      required this.context,
+      super.key});
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -15,7 +20,8 @@ class BlogListItem extends StatelessWidget {
         width: 193,
         decoration: BoxDecoration(
           image: DecorationImage(
-              fit: BoxFit.cover, image: NetworkImage(blogList[index].imageUrl)),
+              fit: BoxFit.cover,
+              image: NetworkImage(controller.topVisitedList[index].imagePath)),
           borderRadius: const BorderRadius.all(
             Radius.circular(22),
           ),
@@ -42,14 +48,14 @@ class BlogListItem extends StatelessWidget {
                         .textTheme
                         .bodySmall
                         ?.copyWith(color: SolidColors.whiteColor),
-                    blogList[index].writer,
+                    controller.topVisitedList[index].author,
                   ),
                   Text(
                       style: Theme.of(context)
                           .textTheme
                           .bodySmall
                           ?.copyWith(color: SolidColors.whiteColor),
-                      blogList[index].views)
+                      controller.topVisitedList[index].view)
                 ],
               ),
             )

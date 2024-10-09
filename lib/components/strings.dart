@@ -25,7 +25,7 @@ class ProjectStrings {
 برای ارسال مطلب و پادکست باید حتما 
 ثبت نام کنی """;
 
-  static const String ShareTechBlog = """
+  static const String shareTechBlog = """
 سلام من از تک بلاگ استفاده می کنم خیلی باحاله و تو هم داشته باش/n
 www.soft98.ir
 """;
