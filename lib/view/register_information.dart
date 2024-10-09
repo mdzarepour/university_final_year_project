@@ -1,11 +1,11 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:tech_blog/const_variabals.dart/project_colors.dart';
-import 'package:tech_blog/const_variabals.dart/strings.dart';
+import 'package:tech_blog/components/project_colors.dart';
+import 'package:tech_blog/components/strings.dart';
 import 'package:tech_blog/gen/assets.gen.dart';
 import 'package:tech_blog/models/project_models.dart';
-import 'package:tech_blog/screens/write_blog.dart';
+import 'package:tech_blog/view/write_blog.dart';
 
 class RegisterInformation extends StatefulWidget {
   const RegisterInformation({super.key});

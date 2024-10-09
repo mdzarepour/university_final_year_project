@@ -2,7 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:tech_blog/gen/assets.gen.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
-import 'package:tech_blog/main_screen.dart';
+import 'package:tech_blog/view/main_screen.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});
@@ -18,7 +18,7 @@ class _SplashScreenState extends State<SplashScreen> {
       (value) => Navigator.pushReplacement(
           context,
           CupertinoPageRoute(
-            builder: (context) => const MainScreen(),
+            builder: (context) => MainScreen(),
           )),
     );
     super.initState();

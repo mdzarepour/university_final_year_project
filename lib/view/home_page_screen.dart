@@ -1,12 +1,14 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:tech_blog/const_variabals.dart/project_colors.dart';
-import 'package:tech_blog/const_variabals.dart/strings.dart';
+import 'package:tech_blog/components/api_constants.dart';
+import 'package:tech_blog/components/project_colors.dart';
+import 'package:tech_blog/components/strings.dart';
 import 'package:tech_blog/gen/assets.gen.dart';
-import 'package:tech_blog/list_items/blog_list_item.dart';
-import 'package:tech_blog/list_items/hashtag_list_item.dart';
-import 'package:tech_blog/list_items/podcast_list_item.dart';
+import 'package:tech_blog/components/blog_list_item.dart';
+import 'package:tech_blog/components/hashtag_list_item.dart';
+import 'package:tech_blog/components/podcast_list_item.dart';
 import 'package:tech_blog/models/project_models.dart';
+import 'package:tech_blog/services/dio_services.dart';
 
 class HomePageScreen extends StatelessWidget {
   const HomePageScreen({

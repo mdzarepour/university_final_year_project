@@ -1,9 +1,9 @@
 import 'package:flutter/cupertino.dart';
-import 'package:tech_blog/const_variabals.dart/project_colors.dart';
-import 'package:tech_blog/const_variabals.dart/strings.dart';
+import 'package:tech_blog/components/project_colors.dart';
+import 'package:tech_blog/components/strings.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:tech_blog/screens/register_information.dart';
+import 'package:tech_blog/view/register_information.dart';
 import 'package:validators/validators.dart';
 import 'package:tech_blog/gen/assets.gen.dart';
 

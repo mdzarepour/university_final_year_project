@@ -19,8 +19,14 @@ class ProjectStrings {
   static const String complateYourInformation =
       """تبریک میگم ، ایمیل با موفقیت تایید شد
 لطفا اطلاعات ثبت نام رو کامل کن""";
+
   static const String welcome = """به تک‌بلاگ خوش اومدی
 
 برای ارسال مطلب و پادکست باید حتما 
 ثبت نام کنی """;
+
+  static const String ShareTechBlog = """
+سلام من از تک بلاگ استفاده می کنم خیلی باحاله و تو هم داشته باش/n
+www.soft98.ir
+""";
 }
