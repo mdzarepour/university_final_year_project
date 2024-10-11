@@ -13,7 +13,7 @@ import 'package:share_plus/share_plus.dart';
 GlobalKey<ScaffoldState> _key = GlobalKey();
 
 class MainScreen extends StatelessWidget {
-  final RxInt _selectedIndex = 0.obs;
+  final RxInt _selectedIndex = 1.obs;
 
   MainScreen({super.key});
 

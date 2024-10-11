@@ -1,15 +1,17 @@
+import 'package:tech_blog/components/api_constants.dart';
+
 class PoosterModel {
-  late String id;
-  late String title;
-  late String image;
+  String? id;
+  String? title;
+  String? image;
   PoosterModel({
-    required this.id,
-    required this.image,
-    required this.title,
+    this.id,
+    this.image,
+    this.title,
   });
   PoosterModel.fromJson(Map<String, dynamic> element) {
     id = element["id"];
     title = element["title"];
-    image = element["image"];
+    image = ApiConstants.hostDonwload + element["image"];
   }
 }

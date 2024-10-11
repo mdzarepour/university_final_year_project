@@ -5,9 +5,9 @@ import 'package:tech_blog/components/project_colors.dart';
 import 'package:tech_blog/components/strings.dart';
 import 'package:tech_blog/controller/home_screen_controller.dart';
 import 'package:tech_blog/gen/assets.gen.dart';
-import 'package:tech_blog/components/blog_list_item.dart';
+import 'package:tech_blog/components/top_visited_article_list_item.dart';
 import 'package:tech_blog/components/hashtag_list_item.dart';
-import 'package:tech_blog/components/podcast_list_item.dart';
+import 'package:tech_blog/components/top_podcasts_list_item.dart';
 import 'package:tech_blog/models/project_models.dart';
 
 HomeScreenController homeScreenController = Get.put(HomeScreenController());
@@ -35,7 +35,11 @@ class HomePageScreen extends StatelessWidget {
                 const SizedBox(
                   height: 25,
                 ),
-                MainScreenPoster(size: size, theme: theme),
+                MainScreenPoster(
+                  size: size,
+                  theme: theme,
+                  controller: HomeScreenController(),
+                ),
                 const SizedBox(
                   height: 55,
                 ),
@@ -49,7 +53,7 @@ class HomePageScreen extends StatelessWidget {
                 const SizedBox(
                   height: 40,
                 ),
-                BlogsListView(size: size),
+                TopVisitedArticleList(size: size),
                 const SizedBox(
                   height: 55,
                 ),
@@ -57,7 +61,7 @@ class HomePageScreen extends StatelessWidget {
                 const SizedBox(
                   height: 40,
                 ),
-                const PodcastsListView(),
+                const TopPodcastsListView(),
                 const SizedBox(
                   height: 90,
                 ),
@@ -70,33 +74,35 @@ class HomePageScreen extends StatelessWidget {
   }
 }
 
-class PodcastsListView extends StatelessWidget {
-  const PodcastsListView({
+class TopPodcastsListView extends StatelessWidget {
+  const TopPodcastsListView({
     super.key,
   });
 
   @override
   Widget build(BuildContext context) {
-    return SizedBox(
-      height: 215.5,
-      width: double.maxFinite,
-      child: ListView.builder(
-        scrollDirection: Axis.horizontal,
-        itemCount: homeScreenController.topPodcastList.length,
-        itemBuilder: (context, index) {
-          return PodcastListItem(
-            controller: homeScreenController,
-            context: context,
-            index: index,
-          );
-        },
+    return Obx(
+      () => SizedBox(
+        height: 215.5,
+        width: double.maxFinite,
+        child: ListView.builder(
+          scrollDirection: Axis.horizontal,
+          itemCount: homeScreenController.topPodcastList.length,
+          itemBuilder: (context, index) {
+            return TopPodcastsListItem(
+              controller: homeScreenController,
+              context: context,
+              index: index,
+            );
+          },
+        ),
       ),
     );
   }
 }
 
-class BlogsListView extends StatelessWidget {
-  const BlogsListView({
+class TopVisitedArticleList extends StatelessWidget {
+  const TopVisitedArticleList({
     super.key,
     required this.size,
   });
@@ -106,20 +112,23 @@ class BlogsListView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      width: double.maxFinite,
-      height: size.height / 6,
-      child: ListView.builder(
-        itemCount: homeScreenController.topVisitedList.length,
-        scrollDirection: Axis.horizontal,
-        itemBuilder: (context, index) {
-          return BlogListItem(
-            controller: homeScreenController,
-            index: index,
-            context: context,
-          );
-        },
-      ),
-    );
+        width: double.maxFinite,
+        height: size.height / 6,
+        child: Obx(
+          () {
+            return ListView.builder(
+              itemCount: homeScreenController.topVisitedList.length,
+              scrollDirection: Axis.horizontal,
+              itemBuilder: (context, index) {
+                return TopVisitedArticleListItem(
+                  controller: homeScreenController,
+                  index: index,
+                  context: context,
+                );
+              },
+            );
+          },
+        ));
   }
 }
 
@@ -157,28 +166,33 @@ class TagsListView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      height: size.height / 21,
-      width: 500,
-      child: ListView.builder(
-        itemCount: homeScreenController.tagList.length,
-        scrollDirection: Axis.horizontal,
-        itemBuilder: (context, index) {
-          return HashtagListItem(
-            controller: homeScreenController,
-            listForDate: hastagList,
-            index: index,
-            context: context,
-          );
-        },
-      ),
-    );
+        height: size.height / 21,
+        width: 500,
+        child: Obx(
+          () {
+            return ListView.builder(
+              itemCount: homeScreenController.tagList.length,
+              scrollDirection: Axis.horizontal,
+              itemBuilder: (context, index) {
+                return HashtagListItem(
+                  controller: homeScreenController,
+                  listForDate: hastagList,
+                  index: index,
+                  context: context,
+                );
+              },
+            );
+          },
+        ));
   }
 }
 
 class MainScreenPoster extends StatelessWidget {
+  final HomeScreenController controller;
   const MainScreenPoster({
     super.key,
     required this.size,
+    required this.controller,
     required this.theme,
   });
 
@@ -200,7 +214,7 @@ class MainScreenPoster extends StatelessWidget {
         ),
       ),
       child: Stack(
-        children: [
+        children: <Widget>[
           Container(
             height: size.height / 4.20,
             width: size.width / 1.19,
@@ -215,18 +229,19 @@ class MainScreenPoster extends StatelessWidget {
             right: 0,
             left: 0,
             child: Column(
-              children: [
+              children: <Widget>[
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceAround,
-                  children: [
+                  children: <Widget>[
                     Text(
-                        style: theme.bodyMedium?.copyWith(fontSize: 18),
+                        style: theme.bodyMedium?.copyWith(fontSize: 16),
                         fakePosterData["writerName"] +
                             ' - ' +
                             fakePosterData["date"]),
-                    Row(children: [
+                    Row(children: <Widget>[
                       Text(
-                          style: theme.bodyMedium?.copyWith(fontSize: 18),
+                          style: theme.bodyMedium?.copyWith(
+                              fontSize: MediaQuery.of(context).size.width / 30),
                           fakePosterData["totalViews"]),
                       const SizedBox(
                         width: 7,
@@ -241,9 +256,13 @@ class MainScreenPoster extends StatelessWidget {
                 const SizedBox(
                   height: 10,
                 ),
-                Text(
-                  style: Theme.of(context).textTheme.bodyLarge,
-                  fakePosterData["articleName"],
+                Padding(
+                  padding: const EdgeInsets.only(right: 30, left: 26),
+                  child: Text(
+                    style: Theme.of(context).textTheme.bodyLarge!.copyWith(
+                        fontSize: MediaQuery.of(context).size.width / 26),
+                    homeScreenController.poster.value.title!,
+                  ),
                 )
               ],
             ),

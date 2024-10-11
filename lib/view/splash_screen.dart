@@ -37,7 +37,7 @@ class _SplashScreenState extends State<SplashScreen> {
           const SizedBox(
             height: 30,
           ),
-          const SpinKitWave(
+          const SpinKitThreeBounce(
             color: Colors.black,
             size: 30,
           )

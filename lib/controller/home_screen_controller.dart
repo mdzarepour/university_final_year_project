@@ -7,7 +7,7 @@ import 'package:tech_blog/models/tags_model.dart';
 import 'package:tech_blog/services/dio_services.dart';
 
 class HomeScreenController extends GetxController {
-  late Rx<PoosterModel> poster;
+  late Rx<PoosterModel> poster = PoosterModel().obs;
   late RxList<TagsModel> tagList = RxList();
   late RxList<ArticleModel> topVisitedList = RxList();
   late RxList<PodcastModel> topPodcastList = RxList();
@@ -21,27 +21,18 @@ class HomeScreenController extends GetxController {
   getHomeItemsData() async {
     var value = await DioServices().getMethod(ApiConstants.getHomeItems);
     if (value.statusCode == 200) {
+      poster.value = PoosterModel.fromJson(value.data["poster"]);
+
       value.data["top_visited"].forEach((element) {
         topVisitedList.add(ArticleModel.fromJson(element));
       });
-    }
-    if (value.statusCode == 200) {
+
       value.data["top_podcasts"].forEach((element) {
         topPodcastList.add(PodcastModel.fromJson(element));
       });
-    }
-    if (value.statusCode == 200) {
+
       value.data["tags"].forEach((element) {
         tagList.add(TagsModel.fromJson(element));
-      });
-    }
-    if (value.statusCode == 200) {
-      value.data["poster"].forEach((element) {
-        poster = PoosterModel(
-          id: element["id"],
-          image: element["title"],
-          title: element["image"],
-        ).obs;
       });
     }
   }
