@@ -44,8 +44,8 @@ class TopVisitedArticleListItem extends StatelessWidget {
                       size: 15,
                       color: SolidColors.purpleButtomColor2,
                     ),
-                    errorWidget: (context, url, error) =>
-                        const Icon(HugeIcons.strokeRoundedImage01),
+                    errorWidget: (context, url, error) => const Center(
+                        child: Icon(HugeIcons.strokeRoundedImage01)),
                   ),
                   Container(
                     height: double.maxFinite,

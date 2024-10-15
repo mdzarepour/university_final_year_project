@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:get/get.dart';
 import 'package:tech_blog/components/project_colors.dart';
-import 'package:tech_blog/view/splash_screen.dart';
+import 'package:tech_blog/view/home_page_screen.dart';
+import 'package:tech_blog/view/main_screen.dart';
+import 'package:tech_blog/view/read_article_screen.dart';
 
 void main(List<String> args) {
   SystemChrome.setSystemUIOverlayStyle(const SystemUiOverlayStyle(
@@ -19,7 +21,7 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
+    return GetMaterialApp(
       theme: ThemeData(
         inputDecorationTheme: const InputDecorationTheme(
           contentPadding: EdgeInsets.symmetric(horizontal: 20),
@@ -82,16 +84,26 @@ class MyApp extends StatelessWidget {
               color: SolidColors.blueLinkTitles,
               fontFamily: 'vazir',
               fontSize: 17,
+            ),
+            titleMedium: TextStyle(
+              color: Colors.black,
+              fontFamily: 'vazir',
+              fontSize: 15,
+            ),
+            titleSmall: TextStyle(
+              color: SolidColors.greySubTitles,
+              fontFamily: 'vazir',
+              fontSize: 13,
             )),
       ),
       debugShowCheckedModeBanner: false,
-      localizationsDelegates: const [
-        GlobalMaterialLocalizations.delegate,
-        GlobalWidgetsLocalizations.delegate,
-        GlobalCupertinoLocalizations.delegate,
-      ],
-      supportedLocales: const [
-        Locale('fa'), // farsi
+      locale: const Locale('fa'),
+      getPages: [
+        GetPage(name: "/HomePageScreen", page: () => const HomePageScreen()),
+        GetPage(
+          name: "/singleArticle",
+          page: () => ReadArticleScreen(),
+        ),
       ],
       home: const MyHomePage(),
     );
@@ -103,14 +115,10 @@ class MyHomePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const Scaffold(
+    return Scaffold(
       body: SafeArea(
         child: Center(
-          child: Column(
-            children: [
-              SplashScreen(),
-            ],
-          ),
+          child: MainScreen(),
         ),
       ),
     );

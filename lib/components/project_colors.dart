@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 class SolidColors {
   static const Color blueLinkTitles = Color.fromARGB(255, 40, 107, 184);
+  static const Color appBarPurple = Color.fromARGB(255, 151, 120, 170);
   static const Color whiteTransparentColor = Color.fromARGB(210, 255, 255, 255);
   static const Color whiteColor = Color.fromARGB(255, 255, 255, 255);
   static const Color blackTitles = Color.fromARGB(255, 0, 0, 0);
@@ -33,6 +34,14 @@ class GradientColors {
   static const Gradient bannerGradientColor = LinearGradient(
       begin: Alignment.topCenter,
       end: Alignment.bottomCenter,
+      colors: [
+        Color.fromARGB(0, 40, 41, 46),
+        Color.fromARGB(120, 72, 20, 88),
+        Color.fromARGB(255, 28, 20, 81),
+      ]);
+  static const Gradient readArticleBannerGradient = LinearGradient(
+      begin: Alignment.center,
+      end: Alignment.topCenter,
       colors: [
         Color.fromARGB(0, 40, 41, 46),
         Color.fromARGB(120, 72, 20, 88),

@@ -80,6 +80,11 @@ class RegisterIntro extends StatelessWidget {
                 Padding(
                   padding: const EdgeInsets.fromLTRB(40, 35, 60, 40),
                   child: TextField(
+                    textDirection: TextDirection.ltr,
+                    style: const TextStyle(
+                      color: Colors.black,
+                      fontSize: 15,
+                    ),
                     onChanged: (value) {
                       if (isEmail(value)) {}
                     },
@@ -150,6 +155,11 @@ class RegisterIntro extends StatelessWidget {
                 Padding(
                   padding: const EdgeInsets.fromLTRB(40, 35, 60, 40),
                   child: TextField(
+                    textDirection: TextDirection.ltr,
+                    style: const TextStyle(
+                      color: Colors.black,
+                      fontSize: 15,
+                    ),
                     onChanged: (value) {
                       if (isEmail(value)) {}
                     },
@@ -157,9 +167,6 @@ class RegisterIntro extends StatelessWidget {
                       contentPadding: EdgeInsets.symmetric(horizontal: 20),
                       hintText: "example@gmail.com",
                       hintTextDirection: TextDirection.ltr,
-                      hintStyle: TextStyle(
-                        color: Color.fromARGB(92, 88, 86, 86),
-                      ),
                       border: OutlineInputBorder(
                         borderSide: BorderSide(
                           color: Color.fromARGB(255, 112, 112, 112),

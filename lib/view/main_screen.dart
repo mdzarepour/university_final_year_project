@@ -26,6 +26,7 @@ class MainScreen extends StatelessWidget {
       key: _key,
       drawer: const DrawerMenu(),
       appBar: AppBar(
+        scrolledUnderElevation: 0,
         automaticallyImplyLeading: false,
         title: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -34,13 +35,23 @@ class MainScreen extends StatelessWidget {
                 onTap: () {
                   _key.currentState!.openDrawer();
                 },
-                child: Icon(
-                    size: size.height / 40, HugeIcons.strokeRoundedMenu02)),
+                child: SizedBox(
+                  width: 55,
+                  height: 55,
+                  child: Icon(
+                      size: size.height / 40, HugeIcons.strokeRoundedMenu02),
+                )),
             Image(
               height: size.height / 13.6,
               image: Assets.images.a1.provider(),
             ),
-            const Icon(HugeIcons.strokeRoundedSearch01)
+            const SizedBox(
+              height: 55,
+              width: 55,
+              child: Icon(
+                HugeIcons.strokeRoundedSearch01,
+              ),
+            )
           ],
         ),
       ),
@@ -54,7 +65,7 @@ class MainScreen extends StatelessWidget {
                   index: _selectedIndex.value,
                   children: [
                     ProfileScreen(size: size, theme: theme),
-                    HomePageScreen(size: size, theme: theme),
+                    const HomePageScreen(),
                     const RegisterIntro(),
                   ],
                 );
@@ -106,31 +117,37 @@ class BottumNavigation extends StatelessWidget {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
-                  IconButton(
-                    onPressed: () {
-                      screenChanger(1);
-                    },
-                    icon: ImageIcon(
-                      color: SolidColors.whiteColor,
-                      Assets.icons.icon.provider(),
+                  Expanded(
+                    child: IconButton(
+                      onPressed: () {
+                        screenChanger(1);
+                      },
+                      icon: ImageIcon(
+                        color: SolidColors.whiteColor,
+                        Assets.icons.icon.provider(),
+                      ),
                     ),
                   ),
-                  IconButton(
-                    onPressed: () {
-                      screenChanger(2);
-                    },
-                    icon: ImageIcon(
-                      color: SolidColors.whiteColor,
-                      Assets.icons.w.provider(),
+                  Expanded(
+                    child: IconButton(
+                      onPressed: () {
+                        screenChanger(2);
+                      },
+                      icon: ImageIcon(
+                        color: SolidColors.whiteColor,
+                        Assets.icons.w.provider(),
+                      ),
                     ),
                   ),
-                  IconButton(
-                    onPressed: () {
-                      screenChanger(0);
-                    },
-                    icon: ImageIcon(
-                      color: SolidColors.whiteColor,
-                      Assets.icons.user.provider(),
+                  Expanded(
+                    child: IconButton(
+                      onPressed: () {
+                        screenChanger(0);
+                      },
+                      icon: ImageIcon(
+                        color: SolidColors.whiteColor,
+                        Assets.icons.user.provider(),
+                      ),
                     ),
                   ),
                 ],

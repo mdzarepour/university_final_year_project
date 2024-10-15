@@ -25,9 +25,9 @@ class _RegisterInformationState extends State<RegisterInformation> {
             child: Column(
               children: [
                 Padding(
-                  padding: const EdgeInsets.only(top: 70, bottom: 35),
+                  padding: const EdgeInsets.only(top: 20, bottom: 35),
                   child:
-                      SvgPicture.asset(height: 170, Assets.icons.techBot.path),
+                      SvgPicture.asset(height: 135, Assets.icons.techBot.path),
                 ),
                 RichText(
                   textAlign: TextAlign.center,
