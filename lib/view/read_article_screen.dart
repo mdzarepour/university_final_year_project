@@ -7,18 +7,29 @@ import 'package:tech_blog/components/project_colors.dart';
 import 'package:tech_blog/controller/read_article_screen_controller.dart';
 import 'package:tech_blog/gen/assets.gen.dart';
 
-class ReadArticleScreen extends StatelessWidget {
-  ReadArticleScreen({super.key});
+class ReadArticleScreen extends StatefulWidget {
+  const ReadArticleScreen({super.key});
+
+  @override
+  State<ReadArticleScreen> createState() => _ReadArticleScreenState();
+}
+
+class _ReadArticleScreenState extends State<ReadArticleScreen> {
   final ReadArticleScreenController readArticleScreenController =
       Get.put(ReadArticleScreenController());
+  @override
+  void initState() {
+    super.initState();
+    readArticleScreenController.getReadArticleScreenData();
+  }
 
   @override
   Widget build(BuildContext context) {
     var size = MediaQuery.of(context).size;
-    return Scaffold(
-      body: SafeArea(
-        child: Obx(() => readArticleScreenController.loading.value == false
-            ? SingleChildScrollView(
+    return Obx(() => readArticleScreenController.loading.value == false
+        ? Scaffold(
+            body: SafeArea(
+              child: SingleChildScrollView(
                 child: Center(
                   child: Column(
                     children: [
@@ -28,118 +39,86 @@ class ReadArticleScreen extends StatelessWidget {
                         decoration: BoxDecoration(
                           border: Border.all(color: Colors.black),
                         ),
-                        child: const ReadArticleScreenBanner(),
+                        child: const ArticleBanner(),
                       ),
-                      const ArticleContent(),
-                      const RelatedArticlesListView(),
+                      Padding(
+                        padding: const EdgeInsets.fromLTRB(12, 16, 12, 15),
+                        child: Column(
+                          children: [
+                            Text(
+                              style: Theme.of(context)
+                                  .textTheme
+                                  .bodyLarge!
+                                  .copyWith(
+                                    color: Colors.black,
+                                    fontSize: 20,
+                                  ),
+                              Get.find<ReadArticleScreenController>()
+                                  .articleInfoModel
+                                  .value
+                                  .title!,
+                            ),
+                            const SizedBox(
+                              height: 25,
+                            ),
+                            Row(
+                              children: [
+                                Image.asset(
+                                    height: 40, Assets.images.a3899618.path),
+                                const SizedBox(
+                                  width: 20,
+                                ),
+                                Text(
+                                    style: Theme.of(context)
+                                        .textTheme
+                                        .bodyMedium!
+                                        .copyWith(
+                                            color: Colors.black,
+                                            fontWeight: FontWeight.w600),
+                                    Get.find<ReadArticleScreenController>()
+                                        .articleInfoModel
+                                        .value
+                                        .author!),
+                                const SizedBox(
+                                  width: 20,
+                                ),
+                                Text(
+                                  style: Theme.of(context)
+                                      .textTheme
+                                      .bodyMedium!
+                                      .copyWith(
+                                          color: SolidColors.greySubTitles),
+                                  Get.find<ReadArticleScreenController>()
+                                      .articleInfoModel
+                                      .value
+                                      .createdAt!,
+                                ),
+                              ],
+                            ),
+                            const Divider(),
+                            const SizedBox(height: 20),
+                            const ArticleContent(),
+                            const SizedBox(height: 40),
+                            const TagsListView(),
+                          ],
+                        ),
+                      ),
+                      RelatedArticlesListView(size: size),
                     ],
                   ),
                 ),
-              )
-            : const SpinKitThreeBounce(
-                color: SolidColors.purpleButtomColor2,
-                size: 15,
-              )),
-      ),
-    );
-  }
-}
-
-class RelatedArticlesListView extends StatelessWidget {
-  const RelatedArticlesListView({
-    super.key,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    var getSize = Get.width;
-    return SizedBox(
-      width: Get.width,
-      height: Get.height / 3.5,
-      child: ListView.builder(
-        itemCount:
-            Get.find<ReadArticleScreenController>().relatedArticlesList.length,
-        scrollDirection: Axis.horizontal,
-        itemBuilder: (context, index) {
-          return Padding(
-            padding:
-                EdgeInsets.only(left: 15, right: index == 0 ? getSize / 36 : 0),
-            child: SizedBox(
-              height: Get.height,
-              width: Get.width / 2.1,
-              child: Column(
-                children: <Widget>[
-                  Stack(
-                    children: [
-                      SizedBox(
-                        width: Get.width,
-                        height: Get.height / 5,
-                        child: CachedNetworkImage(
-                          imageUrl: Get.find<ReadArticleScreenController>()
-                              .relatedArticlesList[index]
-                              .imagePath,
-                          imageBuilder: (context, imageProvider) {
-                            return Container(
-                              decoration: BoxDecoration(
-                                borderRadius: const BorderRadius.all(
-                                  Radius.circular(25),
-                                ),
-                                image: DecorationImage(
-                                    fit: BoxFit.cover, image: imageProvider),
-                              ),
-                            );
-                          },
-                          placeholder: (context, url) =>
-                              const SpinKitThreeBounce(
-                            color: SolidColors.purpleButtomColor2,
-                            size: 15,
-                          ),
-                          errorWidget: (context, url, error) => const Icon(
-                            HugeIcons.strokeRoundedImage01,
-                          ),
-                        ),
-                      ),
-                      Container(
-                        width: Get.width,
-                        height: Get.height / 5,
-                        decoration: const BoxDecoration(
-                          borderRadius: BorderRadius.all(Radius.circular(25)),
-                          gradient: GradientColors.blogsListviewGradientColor,
-                        ),
-                      )
-                    ],
-                  ),
-                  const SizedBox(
-                    height: 10,
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.only(left: 5, right: 5),
-                    child: Text(
-                      textDirection: TextDirection.rtl,
-                      textAlign: TextAlign.center,
-                      softWrap: true,
-                      maxLines: 2,
-                      style: Theme.of(context)
-                          .textTheme
-                          .headlineMedium!
-                          .copyWith(color: Colors.black, fontSize: 16),
-                      Get.find<ReadArticleScreenController>()
-                          .relatedArticlesList[index]
-                          .title,
-                    ),
-                  )
-                ],
               ),
             ),
-          );
-        },
-      ),
-    );
+          )
+        : const SpinKitThreeBounce(
+            color: SolidColors.purpleButtomColor2,
+            size: 15,
+          ));
   }
 }
 
-class ReadArticleScreenBanner extends StatelessWidget {
-  const ReadArticleScreenBanner({
+class ArticleBanner extends StatelessWidget {
+  const ArticleBanner({
     super.key,
   });
 
@@ -218,72 +197,20 @@ class ArticleContent extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.fromLTRB(12, 16, 12, 15),
-      child: Column(
-        children: [
-          Text(
-            style: Theme.of(context).textTheme.bodyLarge!.copyWith(
-                  color: Colors.black,
-                  fontSize: 20,
-                ),
-            Get.find<ReadArticleScreenController>()
-                .articleInfoModel
-                .value
-                .title!,
-          ),
-          const SizedBox(
-            height: 25,
-          ),
-          Row(
-            children: [
-              Image.asset(height: 40, Assets.images.a3899618.path),
-              const SizedBox(
-                width: 20,
-              ),
-              Text(
-                  style: Theme.of(context).textTheme.bodyMedium!.copyWith(
-                      color: Colors.black, fontWeight: FontWeight.w600),
-                  Get.find<ReadArticleScreenController>()
-                      .articleInfoModel
-                      .value
-                      .author!),
-              const SizedBox(
-                width: 20,
-              ),
-              Text(
-                style: Theme.of(context)
-                    .textTheme
-                    .bodyMedium!
-                    .copyWith(color: SolidColors.greySubTitles),
-                Get.find<ReadArticleScreenController>()
-                    .articleInfoModel
-                    .value
-                    .createdAt!,
-              ),
-            ],
-          ),
-          const Divider(),
-          const SizedBox(height: 20),
-          SizedBox(
-            width: Get.width,
-            child: Text(
-              style: Theme.of(context).textTheme.bodyMedium!.copyWith(
-                    color: SolidColors.greySubTitles,
-                  ),
-              "${Get.find<ReadArticleScreenController>().articleInfoModel.value.content}",
+    return SizedBox(
+      width: Get.width,
+      child: Text(
+        style: Theme.of(context).textTheme.bodyMedium!.copyWith(
+              color: SolidColors.greySubTitles,
             ),
-          ),
-          const SizedBox(height: 40),
-          const ReadArticleScreenTagsList()
-        ],
+        "${Get.find<ReadArticleScreenController>().articleInfoModel.value.content}",
       ),
     );
   }
 }
 
-class ReadArticleScreenTagsList extends StatelessWidget {
-  const ReadArticleScreenTagsList({
+class TagsListView extends StatelessWidget {
+  const TagsListView({
     super.key,
   });
 
@@ -315,6 +242,101 @@ class ReadArticleScreenTagsList extends StatelessWidget {
                           .tagsList[index]
                           .title),
                 ),
+              ),
+            ),
+          );
+        },
+      ),
+    );
+  }
+}
+
+class RelatedArticlesListView extends StatelessWidget {
+  const RelatedArticlesListView({
+    super.key,
+    required this.size,
+  });
+
+  final Size size;
+
+  @override
+  Widget build(BuildContext context) {
+    return SizedBox(
+      width: Get.width,
+      height: Get.height / 3.5,
+      child: ListView.builder(
+        itemCount:
+            Get.find<ReadArticleScreenController>().relatedArticlesList.length,
+        scrollDirection: Axis.horizontal,
+        itemBuilder: (context, index) {
+          return Padding(
+            padding: EdgeInsets.only(
+                left: 15, right: index == 0 ? size.width / 36 : 0),
+            child: SizedBox(
+              height: Get.height,
+              width: Get.width / 2.1,
+              child: Column(
+                children: <Widget>[
+                  Stack(
+                    children: [
+                      SizedBox(
+                        width: Get.width,
+                        height: Get.height / 5,
+                        child: CachedNetworkImage(
+                          imageUrl: Get.find<ReadArticleScreenController>()
+                              .relatedArticlesList[index]
+                              .imagePath,
+                          imageBuilder: (context, imageProvider) {
+                            return Container(
+                              decoration: BoxDecoration(
+                                borderRadius: const BorderRadius.all(
+                                  Radius.circular(25),
+                                ),
+                                image: DecorationImage(
+                                    fit: BoxFit.cover, image: imageProvider),
+                              ),
+                            );
+                          },
+                          placeholder: (context, url) =>
+                              const SpinKitThreeBounce(
+                            color: SolidColors.purpleButtomColor2,
+                            size: 15,
+                          ),
+                          errorWidget: (context, url, error) => const Icon(
+                            HugeIcons.strokeRoundedImage01,
+                          ),
+                        ),
+                      ),
+                      Container(
+                        width: Get.width,
+                        height: Get.height / 5,
+                        decoration: const BoxDecoration(
+                          borderRadius: BorderRadius.all(Radius.circular(25)),
+                          gradient: GradientColors.blogsListviewGradientColor,
+                        ),
+                      )
+                    ],
+                  ),
+                  const SizedBox(
+                    height: 10,
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.only(left: 5, right: 5),
+                    child: Text(
+                      textDirection: TextDirection.rtl,
+                      textAlign: TextAlign.center,
+                      softWrap: true,
+                      maxLines: 2,
+                      style: Theme.of(context)
+                          .textTheme
+                          .headlineMedium!
+                          .copyWith(color: Colors.black, fontSize: 16),
+                      Get.find<ReadArticleScreenController>()
+                          .relatedArticlesList[index]
+                          .title,
+                    ),
+                  )
+                ],
               ),
             ),
           );

@@ -2,8 +2,7 @@ class ApiConstants {
   static const String hostDonwload = "https://techblog.sasansafari.com";
   static const String baseUrl =
       "https://techblog.sasansafari.com/Techblog/api/";
-  static const String getArticleInfo =
-      "${baseUrl}article/get.php?command=info&id=16&user_id=1";
+
   static const String newArticle =
       "${baseUrl}article/get.php?command=new&user_id=1";
   static const String favoriteArticles =

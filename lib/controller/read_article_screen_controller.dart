@@ -12,14 +12,12 @@ class ReadArticleScreenController extends GetxController {
   RxList<ArticleModel> relatedArticlesList = RxList();
   RxList<TagsModel> tagsList = RxList();
   RxBool loading = RxBool(true);
-  @override
-  void onInit() {
-    super.onInit();
-    getReadArticleScreenData();
-  }
+  RxInt articleId = RxInt(-1);
 
   Future<void> getReadArticleScreenData() async {
-    var response = await DioServices().getMethod(ApiConstants.getArticleInfo);
+    var userId = '';
+    var response = await DioServices().getMethod(
+        '${ApiConstants.baseUrl}article/get.php?command=info&id=$articleId&user_id=$userId');
     loading.value = true;
     try {
       if (response.statusCode == 200) {
@@ -28,10 +26,11 @@ class ReadArticleScreenController extends GetxController {
             ArticleInfoModel.fromJson(response.data["info"]);
 
         isFavorite.value = response.data["isFavorite"];
-
+        relatedArticlesList.clear();
         response.data["related"].forEach((element) {
           relatedArticlesList.add(ArticleModel.fromJson(element));
         });
+        tagsList.clear();
         response.data["tags"].forEach((element) {
           tagsList.add(TagsModel.fromJson(element));
         });
@@ -40,7 +39,6 @@ class ReadArticleScreenController extends GetxController {
       developer.log("===> response ha an error : $e");
     } finally {
       loading.value = false;
-      developer.log(relatedArticlesList.length.toString());
     }
   }
 }
