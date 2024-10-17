@@ -12,6 +12,7 @@ import 'package:tech_blog/components/hashtag_list_item.dart';
 import 'package:tech_blog/components/top_podcasts_list_item.dart';
 import 'package:tech_blog/models/project_models.dart';
 import 'package:tech_blog/view/articles_list_screen.dart';
+import 'package:tech_blog/view/read_article_screen.dart';
 
 HomeScreenController homeScreenController = Get.put(HomeScreenController());
 
@@ -130,10 +131,15 @@ class TopVisitedArticleList extends StatelessWidget {
         itemCount: homeScreenController.topVisitedList.length,
         scrollDirection: Axis.horizontal,
         itemBuilder: (context, index) {
-          return TopVisitedArticleListItem(
-            controller: homeScreenController,
-            index: index,
-            context: context,
+          return InkWell(
+            onTap: () {
+              Get.to(() => const ReadArticleScreen());
+            },
+            child: TopVisitedArticleListItem(
+              controller: homeScreenController,
+              index: index,
+              context: context,
+            ),
           );
         },
       ),

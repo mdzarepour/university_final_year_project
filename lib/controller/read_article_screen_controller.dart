@@ -15,13 +15,14 @@ class ReadArticleScreenController extends GetxController {
   RxInt articleId = RxInt(-1);
 
   Future<void> getReadArticleScreenData() async {
+    articleInfoModel = ArticleInfoModel().obs;
     var userId = '';
     var response = await DioServices().getMethod(
         '${ApiConstants.baseUrl}article/get.php?command=info&id=$articleId&user_id=$userId');
     loading.value = true;
     try {
       if (response.statusCode == 200) {
-        developer.log("loading started");
+        articleInfoModel.value = ArticleInfoModel();
         articleInfoModel.value =
             ArticleInfoModel.fromJson(response.data["info"]);
 

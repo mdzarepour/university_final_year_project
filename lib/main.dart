@@ -102,7 +102,7 @@ class MyApp extends StatelessWidget {
         GetPage(name: "/HomePageScreen", page: () => const HomePageScreen()),
         GetPage(
           name: "/singleArticle",
-          page: () => ReadArticleScreen(),
+          page: () => const ReadArticleScreen(),
         ),
       ],
       home: const MyHomePage(),

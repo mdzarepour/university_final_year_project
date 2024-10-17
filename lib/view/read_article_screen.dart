@@ -4,8 +4,10 @@ import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:get/get.dart';
 import 'package:hugeicons/hugeicons.dart';
 import 'package:tech_blog/components/project_colors.dart';
+import 'package:tech_blog/controller/article_model_controller.dart';
 import 'package:tech_blog/controller/read_article_screen_controller.dart';
 import 'package:tech_blog/gen/assets.gen.dart';
+import 'package:tech_blog/view/show_article_list_from_tag_id.dart';
 
 class ReadArticleScreen extends StatefulWidget {
   const ReadArticleScreen({super.key});
@@ -14,9 +16,12 @@ class ReadArticleScreen extends StatefulWidget {
   State<ReadArticleScreen> createState() => _ReadArticleScreenState();
 }
 
+final ReadArticleScreenController readArticleScreenController =
+    Get.put(ReadArticleScreenController());
+final ArticleModelController articleModelController =
+    Get.put(ArticleModelController());
+
 class _ReadArticleScreenState extends State<ReadArticleScreen> {
-  final ReadArticleScreenController readArticleScreenController =
-      Get.put(ReadArticleScreenController());
   @override
   void initState() {
     super.initState();
@@ -26,94 +31,90 @@ class _ReadArticleScreenState extends State<ReadArticleScreen> {
   @override
   Widget build(BuildContext context) {
     var size = MediaQuery.of(context).size;
-    return Obx(() => readArticleScreenController.loading.value == false
-        ? Scaffold(
-            body: SafeArea(
-              child: SingleChildScrollView(
-                child: Center(
-                  child: Column(
-                    children: [
-                      Container(
-                        width: size.width,
-                        height: size.height / 3.9,
-                        decoration: BoxDecoration(
-                          border: Border.all(color: Colors.black),
+    return Obx(
+      () => Scaffold(
+        body: readArticleScreenController.articleInfoModel.value.title == null
+            ? const SpinKitThreeBounce(
+                size: 15,
+                color: SolidColors.purpleButtomColor2,
+              )
+            : SafeArea(
+                child: SingleChildScrollView(
+                  child: Center(
+                    child: Column(
+                      children: [
+                        Container(
+                          width: size.width,
+                          height: size.height / 3.9,
+                          decoration: BoxDecoration(
+                            border: Border.all(color: Colors.black),
+                          ),
+                          child: const ArticleBanner(),
                         ),
-                        child: const ArticleBanner(),
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.fromLTRB(12, 16, 12, 15),
-                        child: Column(
-                          children: [
-                            Text(
-                              style: Theme.of(context)
-                                  .textTheme
-                                  .bodyLarge!
-                                  .copyWith(
-                                    color: Colors.black,
-                                    fontSize: 20,
+                        Padding(
+                          padding: const EdgeInsets.fromLTRB(12, 16, 12, 15),
+                          child: Column(
+                            children: [
+                              Text(
+                                style: Theme.of(context)
+                                    .textTheme
+                                    .bodyLarge!
+                                    .copyWith(
+                                      color: Colors.black,
+                                      fontSize: 20,
+                                    ),
+                                readArticleScreenController
+                                    .articleInfoModel.value.title!,
+                              ),
+                              const SizedBox(
+                                height: 25,
+                              ),
+                              Row(
+                                children: [
+                                  Image.asset(
+                                      height: 40, Assets.images.a3899618.path),
+                                  const SizedBox(
+                                    width: 20,
                                   ),
-                              Get.find<ReadArticleScreenController>()
-                                  .articleInfoModel
-                                  .value
-                                  .title!,
-                            ),
-                            const SizedBox(
-                              height: 25,
-                            ),
-                            Row(
-                              children: [
-                                Image.asset(
-                                    height: 40, Assets.images.a3899618.path),
-                                const SizedBox(
-                                  width: 20,
-                                ),
-                                Text(
+                                  Text(
+                                      style: Theme.of(context)
+                                          .textTheme
+                                          .bodyMedium!
+                                          .copyWith(
+                                              color: Colors.black,
+                                              fontWeight: FontWeight.w600),
+                                      readArticleScreenController
+                                          .articleInfoModel.value.author!),
+                                  const SizedBox(
+                                    width: 20,
+                                  ),
+                                  Text(
                                     style: Theme.of(context)
                                         .textTheme
                                         .bodyMedium!
                                         .copyWith(
-                                            color: Colors.black,
-                                            fontWeight: FontWeight.w600),
-                                    Get.find<ReadArticleScreenController>()
-                                        .articleInfoModel
-                                        .value
-                                        .author!),
-                                const SizedBox(
-                                  width: 20,
-                                ),
-                                Text(
-                                  style: Theme.of(context)
-                                      .textTheme
-                                      .bodyMedium!
-                                      .copyWith(
-                                          color: SolidColors.greySubTitles),
-                                  Get.find<ReadArticleScreenController>()
-                                      .articleInfoModel
-                                      .value
-                                      .createdAt!,
-                                ),
-                              ],
-                            ),
-                            const Divider(),
-                            const SizedBox(height: 20),
-                            const ArticleContent(),
-                            const SizedBox(height: 40),
-                            const TagsListView(),
-                          ],
+                                            color: SolidColors.greySubTitles),
+                                    readArticleScreenController
+                                        .articleInfoModel.value.createdAt!,
+                                  ),
+                                ],
+                              ),
+                              const Divider(),
+                              const SizedBox(height: 20),
+                              const ArticleContent(),
+                              const SizedBox(height: 40),
+                              const TagsListView(),
+                            ],
+                          ),
                         ),
-                      ),
-                      RelatedArticlesListView(size: size),
-                    ],
+                        RelatedArticlesListView(size: size),
+                      ],
+                    ),
                   ),
                 ),
               ),
-            ),
-          )
-        : const SpinKitThreeBounce(
-            color: SolidColors.purpleButtomColor2,
-            size: 15,
-          ));
+      ),
+    );
   }
 }
 
@@ -130,10 +131,7 @@ class ArticleBanner extends StatelessWidget {
           width: Get.width,
           height: Get.height,
           child: CachedNetworkImage(
-            imageUrl: Get.find<ReadArticleScreenController>()
-                .articleInfoModel
-                .value
-                .image!,
+            imageUrl: readArticleScreenController.articleInfoModel.value.image!,
             imageBuilder: (context, imageProvider) {
               return Container(
                 decoration: BoxDecoration(
@@ -203,7 +201,7 @@ class ArticleContent extends StatelessWidget {
         style: Theme.of(context).textTheme.bodyMedium!.copyWith(
               color: SolidColors.greySubTitles,
             ),
-        "${Get.find<ReadArticleScreenController>().articleInfoModel.value.content}",
+        "${readArticleScreenController.articleInfoModel.value.content}",
       ),
     );
   }
@@ -222,25 +220,32 @@ class TagsListView extends StatelessWidget {
       child: ListView.builder(
         physics: const BouncingScrollPhysics(),
         scrollDirection: Axis.horizontal,
-        itemCount: Get.find<ReadArticleScreenController>().tagsList.length,
+        itemCount: readArticleScreenController.tagsList.length,
         itemBuilder: (context, index) {
-          return Padding(
-            padding: const EdgeInsets.only(left: 10),
-            child: Container(
-              decoration: const BoxDecoration(
-                  color: Color.fromARGB(255, 231, 228, 228),
-                  borderRadius: BorderRadius.all(Radius.circular(15))),
-              child: Center(
-                child: Padding(
-                  padding: const EdgeInsets.only(left: 15, right: 15),
-                  child: Text(
-                      style: Theme.of(context)
-                          .textTheme
-                          .bodyMedium!
-                          .copyWith(color: Colors.black),
-                      Get.find<ReadArticleScreenController>()
-                          .tagsList[index]
-                          .title),
+          return InkWell(
+            onTap: () async {
+              articleModelController.getArticlesListFromTagId(
+                  readArticleScreenController.tagsList[index].id);
+              articleModelController.selectedTagName.value =
+                  readArticleScreenController.tagsList[index].title;
+              Get.to(() => ShowArticleListFromTagId());
+            },
+            child: Padding(
+              padding: const EdgeInsets.only(left: 10),
+              child: Container(
+                decoration: const BoxDecoration(
+                    color: Color.fromARGB(255, 231, 228, 228),
+                    borderRadius: BorderRadius.all(Radius.circular(15))),
+                child: Center(
+                  child: Padding(
+                    padding: const EdgeInsets.only(left: 15, right: 15),
+                    child: Text(
+                        style: Theme.of(context)
+                            .textTheme
+                            .bodyMedium!
+                            .copyWith(color: Colors.black),
+                        readArticleScreenController.tagsList[index].title),
+                  ),
                 ),
               ),
             ),
@@ -265,8 +270,7 @@ class RelatedArticlesListView extends StatelessWidget {
       width: Get.width,
       height: Get.height / 3.5,
       child: ListView.builder(
-        itemCount:
-            Get.find<ReadArticleScreenController>().relatedArticlesList.length,
+        itemCount: readArticleScreenController.relatedArticlesList.length,
         scrollDirection: Axis.horizontal,
         itemBuilder: (context, index) {
           return Padding(
@@ -283,9 +287,8 @@ class RelatedArticlesListView extends StatelessWidget {
                         width: Get.width,
                         height: Get.height / 5,
                         child: CachedNetworkImage(
-                          imageUrl: Get.find<ReadArticleScreenController>()
-                              .relatedArticlesList[index]
-                              .imagePath,
+                          imageUrl: readArticleScreenController
+                              .relatedArticlesList[index].imagePath,
                           imageBuilder: (context, imageProvider) {
                             return Container(
                               decoration: BoxDecoration(
@@ -331,9 +334,8 @@ class RelatedArticlesListView extends StatelessWidget {
                           .textTheme
                           .headlineMedium!
                           .copyWith(color: Colors.black, fontSize: 16),
-                      Get.find<ReadArticleScreenController>()
-                          .relatedArticlesList[index]
-                          .title,
+                      readArticleScreenController
+                          .relatedArticlesList[index].title,
                     ),
                   )
                 ],

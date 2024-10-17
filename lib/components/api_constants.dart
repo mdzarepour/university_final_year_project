@@ -11,8 +11,6 @@ class ApiConstants {
       "${baseUrl}article/get.php?command=published_by_me&user_id=1";
   static const String getArticleWithCatId =
       "${baseUrl}article/get.php?command=get_articles_with_cat_id&cat_id=1&user_id=1";
-  static const String getArticleWithTagId =
-      "${baseUrl}article/get.php?command=get_articles_with_tag_id&tag_id=1&user_id=1";
   static const String newPodcasts =
       "${baseUrl}podcast/get.php?command=new&user_id=1";
   static const String favoritePodcastList =
