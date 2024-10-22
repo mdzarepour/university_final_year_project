@@ -1,6 +1,6 @@
-# share_blog
+# university final year project
 
-A new Flutter project.
+an app for read and sharing podcasts and articles about programming and technology
 
 ## Getting Started
 
