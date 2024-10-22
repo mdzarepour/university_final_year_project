@@ -2,12 +2,12 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:get/get.dart';
-import 'package:hugeicons/hugeicons.dart';
 import 'package:tech_blog/components/lists_appbar.dart';
 import 'package:tech_blog/components/project_colors.dart';
 import 'package:tech_blog/components/strings.dart';
 import 'package:tech_blog/controller/article_model_controller.dart';
 import 'package:tech_blog/controller/read_article_screen_controller.dart';
+import 'package:tech_blog/gen/assets.gen.dart';
 import 'package:tech_blog/view/read_article_screen.dart';
 
 class ArticlesListScreen extends StatelessWidget {
@@ -37,8 +37,10 @@ class ArticlesListScreen extends StatelessWidget {
                             width: MediaQuery.of(context).size.width,
                             height: MediaQuery.of(context).size.height / 7.5,
                             child: InkWell(
-                              onTap: () {
-                                readArticleScreenController.articleId.value =
+                              borderRadius:
+                                  const BorderRadius.all(Radius.circular(25)),
+                              onTap: () async {
+                                readArticleScreenController.id.value =
                                     int.parse(articleModelController
                                         .articleList[index].id);
                                 Get.to(() => const ReadArticleScreen());
@@ -69,8 +71,7 @@ class ArticlesListScreen extends StatelessWidget {
                                         size: 15,
                                       ),
                                       errorWidget: (context, url, error) =>
-                                          const Icon(
-                                              HugeIcons.strokeRoundedImage01),
+                                          Image.asset(Assets.images.a1.path),
                                     ),
                                   ),
                                   const SizedBox(

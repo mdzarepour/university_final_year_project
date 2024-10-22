@@ -1,21 +1,27 @@
 import 'package:dio/dio.dart';
 
 class DioServices {
-  Future<dynamic> getMethod(String url) async {
-    Dio dio = Dio();
-    dio.options.headers['content-Type'] = 'application/json';
+  final Dio _dio = Dio(); // Use a single instance of Dio
 
-    return await dio
-        .get(url,
-            options: Options(
-              contentType: 'application/json',
-              responseType: ResponseType.json,
-              method: 'GET',
-            ))
-        .then(
-      (value) {
-        return value;
-      },
-    );
+  DioServices() {
+    _dio.options.headers['Content-Type'] = 'application/json'; // Corrected header key
+  }
+
+  Future<Response<dynamic>> getMethod(String url) async {
+    try {
+      final response = await _dio.get(
+        url,
+        options: Options(
+          contentType: 'application/json',
+          responseType: ResponseType.json,
+        ),
+      );
+      return response;
+    } on DioError catch (e) {
+      throw Exception('Failed to load data: ${e.message}');
+    } catch (e) {
+      // Handle any other types of exceptions
+      throw Exception('An unexpected error occurred: $e');
+    }
   }
 }

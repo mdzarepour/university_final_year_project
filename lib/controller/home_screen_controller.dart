@@ -8,43 +8,46 @@ import 'package:tech_blog/models/tags_model.dart';
 import 'package:tech_blog/services/dio_services.dart';
 
 class HomeScreenController extends GetxController {
-  late Rx<PoosterModel> poster = PoosterModel().obs;
-  late RxList<TagsModel> tagList = RxList();
-  late RxList<ArticleModel> topVisitedList = RxList();
-  late RxList<PodcastModel> topPodcastList = RxList();
-  RxBool loading = true.obs;
+  var poster = PoosterModel().obs; // Use var for type inference
+  var tagList = <TagsModel>[].obs; // Specify type in the list
+  var topVisitedList = <ArticleModel>[].obs;
+  var topPodcastList = <PodcastModel>[].obs;
+  var loading = true.obs;
 
   @override
-  onInit() {
+  void onInit() {
     super.onInit();
     getHomeItemsData();
   }
-
-  getHomeItemsData() async {
+  Future<void> getHomeItemsData() async {
     loading.value = true;
-    developer.log('Loading started');
     try {
-      var value = await DioServices().getMethod(ApiConstants.getHomeItems);
-      if (value.statusCode == 200) {
-        poster.value = PoosterModel.fromJson(value.data["poster"]);
+      var response = await DioServices().getMethod(ApiConstants.getHomeItems);
+      if (response.statusCode == 200) {
+        poster.value = PoosterModel.fromJson(response.data["poster"]);
 
-        value.data["top_visited"].forEach((element) {
-          topVisitedList.add(ArticleModel.fromJson(element));
-        });
-
-        value.data["top_podcasts"].forEach((element) {
-          topPodcastList.add(PodcastModel.fromJson(element));
-        });
-
-        value.data["tags"].forEach((element) {
-          tagList.add(TagsModel.fromJson(element));
-        });
+        topVisitedList.assignAll(
+          (response.data["top_visited"] as List)
+              .map((element) => ArticleModel.fromJson(element))
+              .toList(),
+        );
+        topPodcastList.assignAll(
+          (response.data["top_podcasts"] as List)
+              .map((element) => PodcastModel.fromJson(element))
+              .toList(),
+        );
+        tagList.assignAll(
+          (response.data["tags"] as List)
+              .map((element) => TagsModel.fromJson(element))
+              .toList(),
+        );
+      } else {
+        developer.log('Failed to load data: ${response.statusCode}');
       }
     } catch (e) {
-      developer.log("error while fetching article $e");
+      developer.log("Error while fetching data: $e");
     } finally {
       loading.value = false;
-      developer.log("loading finished");
     }
   }
 }

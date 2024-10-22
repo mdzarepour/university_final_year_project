@@ -1,9 +1,10 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
-import 'package:hugeicons/hugeicons.dart';
+
 import 'package:tech_blog/components/project_colors.dart';
 import 'package:tech_blog/controller/home_screen_controller.dart';
+import 'package:tech_blog/gen/assets.gen.dart';
 
 class TopVisitedArticleListItem extends StatelessWidget {
   final HomeScreenController controller;
@@ -44,8 +45,9 @@ class TopVisitedArticleListItem extends StatelessWidget {
                       size: 15,
                       color: SolidColors.purpleButtomColor2,
                     ),
-                    errorWidget: (context, url, error) => const Center(
-                        child: Icon(HugeIcons.strokeRoundedImage01)),
+                    errorWidget: (context, url, error) => Center(
+                      child: Image.asset(Assets.images.a1.path),
+                    ),
                   ),
                   Container(
                     height: double.maxFinite,

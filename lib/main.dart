@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:tech_blog/components/project_colors.dart';
+
 import 'package:tech_blog/view/home_page_screen.dart';
-import 'package:tech_blog/view/main_screen.dart';
 import 'package:tech_blog/view/read_article_screen.dart';
 
 void main(List<String> args) {
@@ -98,10 +98,13 @@ class MyApp extends StatelessWidget {
       ),
       debugShowCheckedModeBanner: false,
       locale: const Locale('fa'),
+      initialRoute: '/',
       getPages: [
-        GetPage(name: "/HomePageScreen", page: () => const HomePageScreen()),
+        GetPage(name: "/HomePageScreen",
+            page: () => HomePageScreen()
+        ),
         GetPage(
-          name: "/singleArticle",
+          name: "/ReadArticleScreen",
           page: () => const ReadArticleScreen(),
         ),
       ],
@@ -118,7 +121,7 @@ class MyHomePage extends StatelessWidget {
     return Scaffold(
       body: SafeArea(
         child: Center(
-          child: MainScreen(),
+          child: HomePageScreen(),
         ),
       ),
     );

@@ -6,12 +6,16 @@ import 'package:hugeicons/hugeicons.dart';
 import 'package:tech_blog/components/lists_appbar.dart';
 import 'package:tech_blog/components/project_colors.dart';
 import 'package:tech_blog/controller/article_model_controller.dart';
+import 'package:tech_blog/controller/read_article_screen_controller.dart';
+import 'package:tech_blog/models/article_info_model.dart';
 import 'package:tech_blog/view/read_article_screen.dart';
 
 class ShowArticleListFromTagId extends StatelessWidget {
   ShowArticleListFromTagId({super.key});
   final ArticleModelController articleModelController =
       Get.put(ArticleModelController());
+  final ReadArticleScreenController readArticleScreenController =
+      Get.put(ReadArticleScreenController());
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -34,12 +38,11 @@ class ShowArticleListFromTagId extends StatelessWidget {
                               width: MediaQuery.of(context).size.width,
                               height: MediaQuery.of(context).size.height / 7.5,
                               child: InkWell(
-                                onTap: () {
-                                  readArticleScreenController.articleId.value =
-                                      int.parse(articleModelController
-                                          .listFromTagId[index].id);
-                                  Get.to(() => const ReadArticleScreen());
-                                },
+                                onTap: () async {
+                                  readArticleScreenController.id.value = int.parse(articleModelController.listFromTagId[index].id);
+                                  readArticleScreenController.getReadArticleScreenData();
+                                  Get.to(()=> const ReadArticleScreen()) ;
+                             },
                                 child: Row(
                                   children: [
                                     SizedBox(

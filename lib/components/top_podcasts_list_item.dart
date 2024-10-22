@@ -1,9 +1,9 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
-import 'package:hugeicons/hugeicons.dart';
 import 'package:tech_blog/components/project_colors.dart';
 import 'package:tech_blog/controller/home_screen_controller.dart';
+import 'package:tech_blog/gen/assets.gen.dart';
 
 class TopPodcastsListItem extends StatelessWidget {
   final BuildContext context;
@@ -44,7 +44,7 @@ class TopPodcastsListItem extends StatelessWidget {
                 color: SolidColors.purpleButtomColor2,
               ),
               errorWidget: (context, url, error) =>
-                  const Icon(HugeIcons.strokeRoundedImage01),
+                  Image.asset(Assets.images.a1.path),
             ),
           ),
           Text(

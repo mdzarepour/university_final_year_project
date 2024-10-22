@@ -65,7 +65,7 @@ class MainScreen extends StatelessWidget {
                   index: _selectedIndex.value,
                   children: [
                     ProfileScreen(size: size, theme: theme),
-                    const HomePageScreen(),
+                    HomePageScreen(),
                     const RegisterIntro(),
                   ],
                 );

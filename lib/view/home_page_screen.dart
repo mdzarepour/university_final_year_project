@@ -2,24 +2,24 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:get/get.dart';
-import 'package:hugeicons/hugeicons.dart';
 import 'package:tech_blog/components/project_colors.dart';
 import 'package:tech_blog/components/strings.dart';
 import 'package:tech_blog/controller/home_screen_controller.dart';
+import 'package:tech_blog/controller/read_article_screen_controller.dart';
 import 'package:tech_blog/gen/assets.gen.dart';
-import 'package:tech_blog/components/top_visited_article_list_item.dart';
 import 'package:tech_blog/components/hashtag_list_item.dart';
 import 'package:tech_blog/components/top_podcasts_list_item.dart';
 import 'package:tech_blog/models/project_models.dart';
 import 'package:tech_blog/view/articles_list_screen.dart';
 import 'package:tech_blog/view/read_article_screen.dart';
-
-HomeScreenController homeScreenController = Get.put(HomeScreenController());
-
 class HomePageScreen extends StatelessWidget {
-  const HomePageScreen({
+  HomePageScreen({
     super.key,
   });
+  final HomeScreenController homeScreenController =
+      Get.put(HomeScreenController());
+  final ReadArticleScreenController readArticleScreenController =
+      Get.put(ReadArticleScreenController());
 
   @override
   Widget build(BuildContext context) {
@@ -37,15 +37,57 @@ class HomePageScreen extends StatelessWidget {
                       const SizedBox(
                         height: 25,
                       ),
-                      MainScreenPoster(
-                        size: size,
-                        theme: theme,
-                        controller: HomeScreenController(),
+                      SizedBox(
+                        width: double.maxFinite,
+                        height: size.height / 4,
+                        child: CachedNetworkImage(
+                          imageUrl: homeScreenController.poster.value.image!,
+                          imageBuilder: (context, imageProvider) {
+                            return Container(
+                              decoration: BoxDecoration(
+                                borderRadius:
+                                    const BorderRadius.all(Radius.circular(25)),
+                                image: DecorationImage(
+                                    image: imageProvider, fit: BoxFit.cover),
+                              ),
+                              child: Stack(
+                                children: [
+                                  Container(
+                                    width: double.maxFinite,
+                                    height: double.maxFinite,
+                                    decoration: const BoxDecoration(
+                                        gradient:
+                                            GradientColors.bannerGradientColor,
+                                        borderRadius: BorderRadius.all(
+                                            Radius.circular(25))),
+                                  ),
+                                  Positioned(
+                                      bottom: 18,
+                                      right: 15,
+                                      left: 10,
+                                      child: Text(
+                                          style: theme.bodyMedium!
+                                              .copyWith(fontSize: 16),
+                                          homeScreenController
+                                              .poster.value.title!)),
+                                ],
+                              ),
+                            );
+                          },
+                          placeholder: (context, url) =>
+                              const SpinKitThreeBounce(
+                            color: SolidColors.purpleButtomColor2,
+                            size: 15,
+                          ),
+                          errorWidget: (context, url, error) => Center(
+                            child: Image.asset(Assets.images.a1.path),
+                          ),
+                        ),
                       ),
                       const SizedBox(
                         height: 55,
                       ),
-                      TagsListView(size: size),
+                      tagsListView(size),
                       const SizedBox(
                         height: 55,
                       ),
@@ -62,7 +104,7 @@ class HomePageScreen extends StatelessWidget {
                       const SizedBox(
                         height: 40,
                       ),
-                      TopVisitedArticleList(size: size),
+                      topVisitedArticles(size),
                       const SizedBox(
                         height: 55,
                       ),
@@ -70,7 +112,7 @@ class HomePageScreen extends StatelessWidget {
                       const SizedBox(
                         height: 40,
                       ),
-                      const TopPodcastsListView(),
+                      topPodcastsList(),
                       const SizedBox(
                         height: 90,
                       ),
@@ -85,45 +127,26 @@ class HomePageScreen extends StatelessWidget {
             size: 15,
           ));
   }
-}
 
-class TopPodcastsListView extends StatelessWidget {
-  const TopPodcastsListView({
-    super.key,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return Obx(
-      () => SizedBox(
-        height: 215.5,
-        width: double.maxFinite,
-        child: ListView.builder(
-          scrollDirection: Axis.horizontal,
-          itemCount: homeScreenController.topPodcastList.length,
-          itemBuilder: (context, index) {
-            return TopPodcastsListItem(
-              controller: homeScreenController,
-              context: context,
-              index: index,
-            );
-          },
-        ),
+  SizedBox topPodcastsList() {
+    return SizedBox(
+      height: 215.5,
+      width: double.maxFinite,
+      child: ListView.builder(
+        scrollDirection: Axis.horizontal,
+        itemCount: homeScreenController.topPodcastList.length,
+        itemBuilder: (context, index) {
+          return TopPodcastsListItem(
+            controller: homeScreenController,
+            context: context,
+            index: index,
+          );
+        },
       ),
     );
   }
-}
 
-class TopVisitedArticleList extends StatelessWidget {
-  const TopVisitedArticleList({
-    super.key,
-    required this.size,
-  });
-
-  final Size size;
-
-  @override
-  Widget build(BuildContext context) {
+  SizedBox topVisitedArticles(Size size) {
     return SizedBox(
       width: double.maxFinite,
       height: size.height / 6,
@@ -131,12 +154,130 @@ class TopVisitedArticleList extends StatelessWidget {
         itemCount: homeScreenController.topVisitedList.length,
         scrollDirection: Axis.horizontal,
         itemBuilder: (context, index) {
+          return Padding(
+            padding: const EdgeInsets.only(left: 10),
+            child: InkWell(
+              onTap: () async {
+                readArticleScreenController.id.value =
+                    int.parse(homeScreenController.topVisitedList[index].id);
+                // Get.to(CustomCupertinoPageRoute(name: '/ReadArticleScreen', page: ReadArticleScreen())) ;
+                Get.to(ReadArticleScreen() , transition: Transition.cupertino);
+
+
+              },
+              child: SizedBox(
+                height: double.maxFinite,
+                width: 193,
+                child: Column(
+                  children: [
+                    SizedBox(
+                      width: double.maxFinite,
+                      height: MediaQuery.of(context).size.height / 6.08,
+                      child: Stack(
+                        children: [
+                          CachedNetworkImage(
+                            imageUrl: homeScreenController
+                                .topVisitedList[index].imagePath,
+                            imageBuilder: (context, imageProvider) {
+                              return Container(
+                                decoration: BoxDecoration(
+                                  borderRadius: const BorderRadius.all(
+                                      Radius.circular(25)),
+                                  image: DecorationImage(
+                                      image: imageProvider, fit: BoxFit.cover),
+                                ),
+                              );
+                            },
+                            placeholder: (context, url) =>
+                                const SpinKitThreeBounce(
+                              size: 15,
+                              color: SolidColors.purpleButtomColor2,
+                            ),
+                            errorWidget: (context, url, error) => Center(
+                              child: Image.asset(Assets.images.a1.path),
+                            ),
+                          ),
+                          Container(
+                            height: double.maxFinite,
+                            width: 193,
+                            decoration: BoxDecoration(
+                              image: DecorationImage(
+                                fit: BoxFit.cover,
+                                image: NetworkImage(homeScreenController
+                                    .topVisitedList[index].imagePath),
+                              ),
+                              borderRadius: const BorderRadius.all(
+                                Radius.circular(22),
+                              ),
+                            ),
+                            child: Stack(
+                              children: [
+                                Container(
+                                  decoration: const BoxDecoration(
+                                    borderRadius: BorderRadius.all(
+                                      Radius.circular(22),
+                                    ),
+                                    gradient: GradientColors
+                                        .blogsListviewGradientColor,
+                                  ),
+                                ),
+                                Positioned(
+                                  bottom: 7,
+                                  right: 0,
+                                  left: 0,
+                                  child: Row(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceAround,
+                                    children: [
+                                      Text(
+                                        style: Theme.of(context)
+                                            .textTheme
+                                            .bodySmall
+                                            ?.copyWith(
+                                                color: SolidColors.whiteColor),
+                                        homeScreenController
+                                            .topVisitedList[index].author,
+                                      ),
+                                      Text(
+                                          style: Theme.of(context)
+                                              .textTheme
+                                              .bodySmall
+                                              ?.copyWith(
+                                                  color:
+                                                      SolidColors.whiteColor),
+                                          homeScreenController
+                                              .topVisitedList[index].view),
+                                    ],
+                                  ),
+                                )
+                              ],
+                            ),
+                          ),
+                        ],
+                      ),
+                    )
+                  ],
+                ),
+              ),
+            ),
+          );
+        },
+      ),
+    );
+  }
+
+  SizedBox tagsListView(Size size) {
+    return SizedBox(
+      height: size.height / 21,
+      width: 500,
+      child: ListView.builder(
+        itemCount: homeScreenController.tagList.length,
+        scrollDirection: Axis.horizontal,
+        itemBuilder: (context, index) {
           return InkWell(
-            onTap: () {
-              Get.to(() => const ReadArticleScreen());
-            },
-            child: TopVisitedArticleListItem(
-              controller: homeScreenController,
+            onTap: () {},
+            child: HashtagListItem(
+              listForDate: hastagList,
               index: index,
               context: context,
             ),
@@ -166,90 +307,6 @@ class SeeMore extends StatelessWidget {
         ),
         Text(style: Theme.of(context).textTheme.headlineMedium, text),
       ],
-    );
-  }
-}
-
-class TagsListView extends StatelessWidget {
-  const TagsListView({
-    super.key,
-    required this.size,
-  });
-
-  final Size size;
-
-  @override
-  Widget build(BuildContext context) {
-    return SizedBox(
-      height: size.height / 21,
-      width: 500,
-      child: ListView.builder(
-        itemCount: homeScreenController.tagList.length,
-        scrollDirection: Axis.horizontal,
-        itemBuilder: (context, index) {
-          return HashtagListItem(
-            listForDate: hastagList,
-            index: index,
-            context: context,
-          );
-        },
-      ),
-    );
-  }
-}
-
-class MainScreenPoster extends StatelessWidget {
-  final HomeScreenController controller;
-  const MainScreenPoster({
-    super.key,
-    required this.size,
-    required this.controller,
-    required this.theme,
-  });
-
-  final Size size;
-  final TextTheme theme;
-
-  @override
-  Widget build(BuildContext context) {
-    return SizedBox(
-      width: double.maxFinite,
-      height: size.height / 4,
-      child: CachedNetworkImage(
-        imageUrl: homeScreenController.poster.value.image!,
-        imageBuilder: (context, imageProvider) {
-          return Container(
-            decoration: BoxDecoration(
-              borderRadius: const BorderRadius.all(Radius.circular(25)),
-              image: DecorationImage(image: imageProvider, fit: BoxFit.cover),
-            ),
-            child: Stack(
-              children: [
-                Container(
-                  width: double.maxFinite,
-                  height: double.maxFinite,
-                  decoration: const BoxDecoration(
-                      gradient: GradientColors.bannerGradientColor,
-                      borderRadius: BorderRadius.all(Radius.circular(25))),
-                ),
-                Positioned(
-                    bottom: 18,
-                    right: 15,
-                    left: 10,
-                    child: Text(
-                        style: theme.bodyMedium!.copyWith(fontSize: 16),
-                        homeScreenController.poster.value.title!)),
-              ],
-            ),
-          );
-        },
-        placeholder: (context, url) => const SpinKitThreeBounce(
-          color: SolidColors.purpleButtomColor2,
-          size: 15,
-        ),
-        errorWidget: (context, url, error) =>
-            const Icon(HugeIcons.strokeRoundedImage01),
-      ),
     );
   }
 }

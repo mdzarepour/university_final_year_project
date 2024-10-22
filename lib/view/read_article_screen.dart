@@ -16,30 +16,31 @@ class ReadArticleScreen extends StatefulWidget {
   State<ReadArticleScreen> createState() => _ReadArticleScreenState();
 }
 
-final ReadArticleScreenController readArticleScreenController =
-    Get.put(ReadArticleScreenController());
-final ArticleModelController articleModelController =
-    Get.put(ArticleModelController());
-
 class _ReadArticleScreenState extends State<ReadArticleScreen> {
+  final ReadArticleScreenController readArticleScreenController =
+      Get.put(ReadArticleScreenController());
+  final ArticleModelController articleModelController =
+      Get.put(ArticleModelController());
+  final ScrollController _scrollController = ScrollController();
   @override
   void initState() {
-    super.initState();
     readArticleScreenController.getReadArticleScreenData();
+    super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
     var size = MediaQuery.of(context).size;
-    return Obx(
-      () => Scaffold(
-        body: readArticleScreenController.articleInfoModel.value.title == null
+    return Scaffold(
+      body: Obx(
+        () => readArticleScreenController.articleInfoModel.value.title == null
             ? const SpinKitThreeBounce(
-                size: 15,
                 color: SolidColors.purpleButtomColor2,
+                size: 15,
               )
             : SafeArea(
                 child: SingleChildScrollView(
+                  controller: _scrollController,
                   child: Center(
                     child: Column(
                       children: [
@@ -49,65 +50,88 @@ class _ReadArticleScreenState extends State<ReadArticleScreen> {
                           decoration: BoxDecoration(
                             border: Border.all(color: Colors.black),
                           ),
-                          child: const ArticleBanner(),
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.fromLTRB(12, 16, 12, 15),
-                          child: Column(
+                          child: Stack(
                             children: [
-                              Text(
-                                style: Theme.of(context)
-                                    .textTheme
-                                    .bodyLarge!
-                                    .copyWith(
-                                      color: Colors.black,
-                                      fontSize: 20,
-                                    ),
-                                readArticleScreenController
-                                    .articleInfoModel.value.title!,
-                              ),
-                              const SizedBox(
-                                height: 25,
-                              ),
-                              Row(
-                                children: [
-                                  Image.asset(
-                                      height: 40, Assets.images.a3899618.path),
-                                  const SizedBox(
-                                    width: 20,
+                              SizedBox(
+                                width: Get.width,
+                                height: Get.height,
+                                child: CachedNetworkImage(
+                                  imageUrl: readArticleScreenController
+                                      .articleInfoModel.value.image!,
+                                  imageBuilder: (context, imageProvider) {
+                                    return Container(
+                                      decoration: BoxDecoration(
+                                        image: DecorationImage(
+                                            image: imageProvider,
+                                            fit: BoxFit.cover),
+                                      ),
+                                    );
+                                  },
+                                  placeholder: (context, url) =>
+                                      const SpinKitThreeBounce(
+                                    color: SolidColors.purpleButtomColor2,
+                                    size: 15,
                                   ),
-                                  Text(
-                                      style: Theme.of(context)
-                                          .textTheme
-                                          .bodyMedium!
-                                          .copyWith(
-                                              color: Colors.black,
-                                              fontWeight: FontWeight.w600),
-                                      readArticleScreenController
-                                          .articleInfoModel.value.author!),
-                                  const SizedBox(
-                                    width: 20,
-                                  ),
-                                  Text(
-                                    style: Theme.of(context)
-                                        .textTheme
-                                        .bodyMedium!
-                                        .copyWith(
-                                            color: SolidColors.greySubTitles),
-                                    readArticleScreenController
-                                        .articleInfoModel.value.createdAt!,
-                                  ),
-                                ],
+                                  errorWidget: (context, url, error) =>
+                                      Image.asset(Assets.images.a1.path),
+                                ),
                               ),
-                              const Divider(),
-                              const SizedBox(height: 20),
-                              const ArticleContent(),
-                              const SizedBox(height: 40),
-                              const TagsListView(),
+                              Container(
+                                height: Get.height,
+                                width: Get.width,
+                                decoration: const BoxDecoration(
+                                    gradient: GradientColors
+                                        .readArticleBannerGradient),
+                              ),
+                              const Padding(
+                                padding: EdgeInsets.fromLTRB(15, 10, 15, 20),
+                                child: Row(
+                                  children: [
+                                    Icon(
+                                        color: SolidColors.whiteColor,
+                                        size: 28,
+                                        HugeIcons.strokeRoundedArrowRight01),
+                                    Expanded(
+                                      child: Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.end,
+                                        children: [
+                                          Icon(
+                                              color: SolidColors.whiteColor,
+                                              size: 28,
+                                              HugeIcons.strokeRoundedFavourite),
+                                          SizedBox(
+                                            width: 10,
+                                          ),
+                                          Icon(
+                                              color: SolidColors.whiteColor,
+                                              size: 28,
+                                              HugeIcons.strokeRoundedShare08),
+                                        ],
+                                      ),
+                                    )
+                                  ],
+                                ),
+                              )
                             ],
                           ),
                         ),
-                        RelatedArticlesListView(size: size),
+                        articleContent(context),
+                        Padding(
+                          padding: const EdgeInsets.fromLTRB(0, 15, 15, 15),
+                          child: Row(
+                            children: [
+                              Text(
+                                  textAlign: TextAlign.start,
+                                  style: Theme.of(context)
+                                      .textTheme
+                                      .headlineMedium!
+                                      .copyWith(color: Colors.black),
+                                  "مقالات مرتبط :"),
+                            ],
+                          ),
+                        ),
+                        relatedArticles(size),
                       ],
                     ),
                   ),
@@ -116,104 +140,63 @@ class _ReadArticleScreenState extends State<ReadArticleScreen> {
       ),
     );
   }
-}
 
-class ArticleBanner extends StatelessWidget {
-  const ArticleBanner({
-    super.key,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return Stack(
-      children: [
-        SizedBox(
-          width: Get.width,
-          height: Get.height,
-          child: CachedNetworkImage(
-            imageUrl: readArticleScreenController.articleInfoModel.value.image!,
-            imageBuilder: (context, imageProvider) {
-              return Container(
-                decoration: BoxDecoration(
-                  image:
-                      DecorationImage(image: imageProvider, fit: BoxFit.cover),
+  Padding articleContent(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.fromLTRB(12, 16, 12, 15),
+      child: Column(
+        children: [
+          Text(
+            style: Theme.of(context).textTheme.bodyLarge!.copyWith(
+                  color: Colors.black,
+                  fontSize: 20,
                 ),
-              );
-            },
-            placeholder: (context, url) => const SpinKitThreeBounce(
-              color: SolidColors.purpleButtomColor2,
-              size: 15,
-            ),
-            errorWidget: (context, url, error) =>
-                const Icon(HugeIcons.strokeRoundedImage01),
+            readArticleScreenController.articleInfoModel.value.title!,
           ),
-        ),
-        Container(
-          height: Get.height,
-          width: Get.width,
-          decoration: const BoxDecoration(
-              gradient: GradientColors.readArticleBannerGradient),
-        ),
-        const Padding(
-          padding: EdgeInsets.fromLTRB(15, 10, 15, 20),
-          child: Row(
+          const SizedBox(
+            height: 25,
+          ),
+          Row(
             children: [
-              Icon(
-                  color: SolidColors.whiteColor,
-                  size: 28,
-                  HugeIcons.strokeRoundedArrowRight01),
-              Expanded(
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.end,
-                  children: [
-                    Icon(
-                        color: SolidColors.whiteColor,
-                        size: 28,
-                        HugeIcons.strokeRoundedFavourite),
-                    SizedBox(
-                      width: 10,
-                    ),
-                    Icon(
-                        color: SolidColors.whiteColor,
-                        size: 28,
-                        HugeIcons.strokeRoundedShare08),
-                  ],
-                ),
-              )
+              Image.asset(height: 40, Assets.images.a3899618.path),
+              const SizedBox(
+                width: 20,
+              ),
+              Text(
+                  style: Theme.of(context).textTheme.bodyMedium!.copyWith(
+                      color: Colors.black, fontWeight: FontWeight.w600),
+                  readArticleScreenController.articleInfoModel.value.author!),
+              const SizedBox(
+                width: 20,
+              ),
+              Text(
+                style: Theme.of(context)
+                    .textTheme
+                    .bodyMedium!
+                    .copyWith(color: SolidColors.greySubTitles),
+                readArticleScreenController.articleInfoModel.value.createdAt!,
+              ),
             ],
           ),
-        )
-      ],
-    );
-  }
-}
-
-class ArticleContent extends StatelessWidget {
-  const ArticleContent({
-    super.key,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return SizedBox(
-      width: Get.width,
-      child: Text(
-        style: Theme.of(context).textTheme.bodyMedium!.copyWith(
-              color: SolidColors.greySubTitles,
+          const Divider(),
+          const SizedBox(height: 20),
+          SizedBox(
+            width: Get.width,
+            child: Text(
+              style: Theme.of(context).textTheme.bodyMedium!.copyWith(
+                    color: SolidColors.greySubTitles,
+                  ),
+              "${readArticleScreenController.articleInfoModel.value.content}",
             ),
-        "${readArticleScreenController.articleInfoModel.value.content}",
+          ),
+          const SizedBox(height: 40),
+          tagsList(),
+        ],
       ),
     );
   }
-}
 
-class TagsListView extends StatelessWidget {
-  const TagsListView({
-    super.key,
-  });
-
-  @override
-  Widget build(BuildContext context) {
+  SizedBox tagsList() {
     return SizedBox(
       width: Get.width,
       height: Get.height / 16.5,
@@ -224,11 +207,12 @@ class TagsListView extends StatelessWidget {
         itemBuilder: (context, index) {
           return InkWell(
             onTap: () async {
-              articleModelController.getArticlesListFromTagId(
-                  readArticleScreenController.tagsList[index].id);
+
               articleModelController.selectedTagName.value =
                   readArticleScreenController.tagsList[index].title;
-              Get.to(() => ShowArticleListFromTagId());
+              articleModelController.getArticlesListFromTagId(
+                  readArticleScreenController.tagsList[index].id);
+              Get.to(ShowArticleListFromTagId());
             },
             child: Padding(
               padding: const EdgeInsets.only(left: 10),
@@ -254,18 +238,8 @@ class TagsListView extends StatelessWidget {
       ),
     );
   }
-}
 
-class RelatedArticlesListView extends StatelessWidget {
-  const RelatedArticlesListView({
-    super.key,
-    required this.size,
-  });
-
-  final Size size;
-
-  @override
-  Widget build(BuildContext context) {
+  SizedBox relatedArticles(Size size) {
     return SizedBox(
       width: Get.width,
       height: Get.height / 3.5,
@@ -276,69 +250,76 @@ class RelatedArticlesListView extends StatelessWidget {
           return Padding(
             padding: EdgeInsets.only(
                 left: 15, right: index == 0 ? size.width / 36 : 0),
-            child: SizedBox(
-              height: Get.height,
-              width: Get.width / 2.1,
-              child: Column(
-                children: <Widget>[
-                  Stack(
-                    children: [
-                      SizedBox(
-                        width: Get.width,
-                        height: Get.height / 5,
-                        child: CachedNetworkImage(
-                          imageUrl: readArticleScreenController
-                              .relatedArticlesList[index].imagePath,
-                          imageBuilder: (context, imageProvider) {
-                            return Container(
-                              decoration: BoxDecoration(
-                                borderRadius: const BorderRadius.all(
-                                  Radius.circular(25),
+            child: InkWell(
+              borderRadius: const BorderRadius.all(Radius.circular(25)),
+              onTap: () async {
+                readArticleScreenController.id.value = int.parse(
+                    readArticleScreenController.relatedArticlesList[index].id);
+                readArticleScreenController.getReadArticleScreenData();
+              },
+              child: SizedBox(
+                height: Get.height,
+                width: Get.width / 2.1,
+                child: Column(
+                  children: <Widget>[
+                    Stack(
+                      children: [
+                        SizedBox(
+                          width: Get.width,
+                          height: Get.height / 5,
+                          child: CachedNetworkImage(
+                            imageUrl: readArticleScreenController
+                                .relatedArticlesList[index].imagePath,
+                            imageBuilder: (context, imageProvider) {
+                              return Container(
+                                decoration: BoxDecoration(
+                                  borderRadius: const BorderRadius.all(
+                                    Radius.circular(25),
+                                  ),
+                                  image: DecorationImage(
+                                      fit: BoxFit.cover, image: imageProvider),
                                 ),
-                                image: DecorationImage(
-                                    fit: BoxFit.cover, image: imageProvider),
-                              ),
-                            );
-                          },
-                          placeholder: (context, url) =>
-                              const SpinKitThreeBounce(
-                            color: SolidColors.purpleButtomColor2,
-                            size: 15,
-                          ),
-                          errorWidget: (context, url, error) => const Icon(
-                            HugeIcons.strokeRoundedImage01,
+                              );
+                            },
+                            placeholder: (context, url) =>
+                                const SpinKitThreeBounce(
+                              color: SolidColors.purpleButtomColor2,
+                              size: 15,
+                            ),
+                            errorWidget: (context, url, error) =>
+                                Image.asset(Assets.images.a1.path),
                           ),
                         ),
-                      ),
-                      Container(
-                        width: Get.width,
-                        height: Get.height / 5,
-                        decoration: const BoxDecoration(
-                          borderRadius: BorderRadius.all(Radius.circular(25)),
-                          gradient: GradientColors.blogsListviewGradientColor,
-                        ),
-                      )
-                    ],
-                  ),
-                  const SizedBox(
-                    height: 10,
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.only(left: 5, right: 5),
-                    child: Text(
-                      textDirection: TextDirection.rtl,
-                      textAlign: TextAlign.center,
-                      softWrap: true,
-                      maxLines: 2,
-                      style: Theme.of(context)
-                          .textTheme
-                          .headlineMedium!
-                          .copyWith(color: Colors.black, fontSize: 16),
-                      readArticleScreenController
-                          .relatedArticlesList[index].title,
+                        Container(
+                          width: Get.width,
+                          height: Get.height / 5,
+                          decoration: const BoxDecoration(
+                            borderRadius: BorderRadius.all(Radius.circular(25)),
+                            gradient: GradientColors.blogsListviewGradientColor,
+                          ),
+                        )
+                      ],
                     ),
-                  )
-                ],
+                    const SizedBox(
+                      height: 10,
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.only(left: 5, right: 5),
+                      child: Text(
+                        textDirection: TextDirection.rtl,
+                        textAlign: TextAlign.center,
+                        softWrap: true,
+                        maxLines: 2,
+                        style: Theme.of(context)
+                            .textTheme
+                            .headlineMedium!
+                            .copyWith(color: Colors.black, fontSize: 16),
+                        readArticleScreenController
+                            .relatedArticlesList[index].title,
+                      ),
+                    )
+                  ],
+                ),
               ),
             ),
           );
@@ -347,3 +328,13 @@ class RelatedArticlesListView extends StatelessWidget {
     );
   }
 }
+ // readArticleScreenController.id.value = int.parse(
+              //     readArticleScreenController.relatedArticlesList[index].id);
+
+              //     .then((_) {
+              //   _scrollController.animateTo(
+              //     0.00,
+              //     duration: const Duration(milliseconds: 1),
+              //     curve: Curves.bounceIn,
+              //   );
+              // });
