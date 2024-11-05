@@ -4,7 +4,9 @@ import 'package:get/get.dart';
 import 'package:tech_blog/components/project_colors.dart';
 
 import 'package:tech_blog/view/home_page_screen.dart';
+import 'package:tech_blog/view/main_screen.dart';
 import 'package:tech_blog/view/read_article_screen.dart';
+import 'package:tech_blog/view/splash_screen.dart';
 
 void main(List<String> args) {
   SystemChrome.setSystemUIOverlayStyle(const SystemUiOverlayStyle(
@@ -100,9 +102,7 @@ class MyApp extends StatelessWidget {
       locale: const Locale('fa'),
       initialRoute: '/',
       getPages: [
-        GetPage(name: "/HomePageScreen",
-            page: () => HomePageScreen()
-        ),
+        GetPage(name: "/HomePageScreen", page: () => HomePageScreen()),
         GetPage(
           name: "/ReadArticleScreen",
           page: () => const ReadArticleScreen(),
@@ -118,10 +118,10 @@ class MyHomePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    return const Scaffold(
       body: SafeArea(
         child: Center(
-          child: HomePageScreen(),
+          child: SplashScreen(),
         ),
       ),
     );

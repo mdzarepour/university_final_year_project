@@ -46,7 +46,7 @@ class TopVisitedArticleListItem extends StatelessWidget {
                       color: SolidColors.purpleButtomColor2,
                     ),
                     errorWidget: (context, url, error) => Center(
-                      child: Image.asset(Assets.images.a1.path),
+                      child: Icon(Icons.image_not_supported_outlined),
                     ),
                   ),
                   Container(

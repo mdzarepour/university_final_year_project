@@ -44,7 +44,7 @@ class TopPodcastsListItem extends StatelessWidget {
                 color: SolidColors.purpleButtomColor2,
               ),
               errorWidget: (context, url, error) =>
-                  Image.asset(Assets.images.a1.path),
+                  Icon(Icons.image_not_supported_outlined),
             ),
           ),
           Text(

@@ -41,10 +41,6 @@ class MainScreen extends StatelessWidget {
                   child: Icon(
                       size: size.height / 40, HugeIcons.strokeRoundedMenu02),
                 )),
-            Image(
-              height: size.height / 13.6,
-              image: Assets.images.a1.provider(),
-            ),
             const SizedBox(
               height: 55,
               width: 55,
@@ -201,7 +197,7 @@ class DrawerMenu extends StatelessWidget {
                       .textTheme
                       .bodyMedium!
                       .copyWith(color: SolidColors.blackTitles),
-                  "درباره تک بلاگ"),
+                  "درباره برنامه"),
               onTap: () {},
             ),
             const Divider(
@@ -213,7 +209,7 @@ class DrawerMenu extends StatelessWidget {
                       .textTheme
                       .bodyMedium!
                       .copyWith(color: SolidColors.blackTitles),
-                  "اشتراک گذاری تک بلاگ"),
+                  "اشتراک گذار"),
               onTap: () async {
                 Share.share(ProjectStrings.shareTechBlog);
               },
@@ -227,9 +223,10 @@ class DrawerMenu extends StatelessWidget {
                       .textTheme
                       .bodyMedium!
                       .copyWith(color: SolidColors.blackTitles),
-                  "تک بلاگ در گیت هاب"),
+                  "مشاهده در گیت هاب"),
               onTap: () {
-                urlLuncher("https://codeyad.com/course/learn-flutter");
+                urlLuncher(
+                    "https://github.com/mdzarepour/university_final_year_project");
               },
             ),
             const Divider(

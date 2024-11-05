@@ -20,13 +20,12 @@ class ProjectStrings {
       """تبریک میگم ، ایمیل با موفقیت تایید شد
 لطفا اطلاعات ثبت نام رو کامل کن""";
 
-  static const String welcome = """به تک‌بلاگ خوش اومدی
-
+  static const String welcome = """خوش اومدی
 برای ارسال مطلب و پادکست باید حتما 
 ثبت نام کنی """;
 
   static const String shareTechBlog = """
-سلام من از تک بلاگ استفاده می کنم خیلی باحاله و تو هم داشته باش/n
-www.soft98.ir
+سلام من از این برنامه استفاده می کنم خیلی باحاله و تو هم داشته باش/n
+https://github.com/mdzarepour/university_final_year_project
 """;
 }

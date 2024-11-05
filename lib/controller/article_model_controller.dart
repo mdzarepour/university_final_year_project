@@ -8,6 +8,7 @@ class ArticleModelController extends GetxController {
   var articleList = <ArticleModel>[].obs;
   var loading = true.obs;
   var listFromTagId = <ArticleModel>[].obs;
+  var tagId = 0.obs;
   var selectedTagName = ''.obs;
   var loading2 = true.obs;
 
@@ -37,13 +38,13 @@ class ArticleModelController extends GetxController {
     }
   }
 
-  Future<void> getArticlesListFromTagId(String tagId) async {
-    loading.value = true;
+  Future<void> getArticlesListFromTagId() async {
+    loading2.value = true;
+    listFromTagId.clear();
     try {
       var response = await DioServices().getMethod(
         'https://techblog.sasansafari.com/Techblog/api/article/get.php?command=get_articles_with_tag_id&tag_id=$tagId&user_id=1',
       );
-
       if (response.statusCode == 200) {
         listFromTagId.assignAll(
           (response.data as List)
@@ -51,12 +52,12 @@ class ArticleModelController extends GetxController {
               .toList(),
         );
       } else {
-        developer.log('Failed to load articles by tag ID: ${response.statusCode}');
+        developer
+            .log('Failed to load articles by tag ID: ${response.statusCode}');
       }
     } catch (e) {
       developer.log("Error while fetching articles from tag ID: $e");
-    } finally {
-      loading.value = false;
     }
+    loading2.value = false;
   }
 }

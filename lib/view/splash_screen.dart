@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:tech_blog/gen/assets.gen.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:tech_blog/view/main_screen.dart';
@@ -13,7 +14,7 @@ class SplashScreen extends StatefulWidget {
 
 class _SplashScreenState extends State<SplashScreen> {
   @override
-  void initState()  {
+  void initState() {
     Future.delayed(const Duration(seconds: 3)).then(
       (value) => Navigator.pushReplacement(
           context,
@@ -30,9 +31,9 @@ class _SplashScreenState extends State<SplashScreen> {
       padding: const EdgeInsets.only(top: 400),
       child: Column(
         children: [
-          Image(
-            height: 85,
-            image: Assets.images.a1.provider(),
+          SvgPicture.asset(height: 150, Assets.icons.techBot.path),
+          const SizedBox(
+            height: 20,
           ),
           const SizedBox(
             height: 30,

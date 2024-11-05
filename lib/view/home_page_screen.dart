@@ -4,6 +4,7 @@ import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:get/get.dart';
 import 'package:tech_blog/components/project_colors.dart';
 import 'package:tech_blog/components/strings.dart';
+import 'package:tech_blog/controller/article_model_controller.dart';
 import 'package:tech_blog/controller/home_screen_controller.dart';
 import 'package:tech_blog/controller/read_article_screen_controller.dart';
 import 'package:tech_blog/gen/assets.gen.dart';
@@ -12,6 +13,8 @@ import 'package:tech_blog/components/top_podcasts_list_item.dart';
 import 'package:tech_blog/models/project_models.dart';
 import 'package:tech_blog/view/articles_list_screen.dart';
 import 'package:tech_blog/view/read_article_screen.dart';
+import 'package:tech_blog/view/show_article_list_from_tag_id.dart';
+
 class HomePageScreen extends StatelessWidget {
   HomePageScreen({
     super.key,
@@ -20,6 +23,8 @@ class HomePageScreen extends StatelessWidget {
       Get.put(HomeScreenController());
   final ReadArticleScreenController readArticleScreenController =
       Get.put(ReadArticleScreenController());
+  final ArticleModelController articleModelController =
+      Get.put(ArticleModelController());
 
   @override
   Widget build(BuildContext context) {
@@ -160,10 +165,8 @@ class HomePageScreen extends StatelessWidget {
               onTap: () async {
                 readArticleScreenController.id.value =
                     int.parse(homeScreenController.topVisitedList[index].id);
-                // Get.to(CustomCupertinoPageRoute(name: '/ReadArticleScreen', page: ReadArticleScreen())) ;
-                Get.to(ReadArticleScreen() , transition: Transition.cupertino);
-
-
+                Get.to(() => const ReadArticleScreen(),
+                    transition: Transition.cupertino);
               },
               child: SizedBox(
                 height: double.maxFinite,
@@ -275,7 +278,14 @@ class HomePageScreen extends StatelessWidget {
         scrollDirection: Axis.horizontal,
         itemBuilder: (context, index) {
           return InkWell(
-            onTap: () {},
+            onTap: () {
+              articleModelController.selectedTagName.value =
+                  homeScreenController.tagList[index].title;
+              articleModelController.tagId.value =
+                  int.parse(homeScreenController.tagList[index].id);
+              articleModelController.getArticlesListFromTagId();
+              Get.to(() => ShowArticleListFromTagId());
+            },
             child: HashtagListItem(
               listForDate: hastagList,
               index: index,

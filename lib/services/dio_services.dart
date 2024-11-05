@@ -17,7 +17,7 @@ class DioServices {
         ),
       );
       return response;
-    } on DioError catch (e) {
+    } on DioException catch (e) {
       throw Exception('Failed to load data: ${e.message}');
     } catch (e) {
       // Handle any other types of exceptions

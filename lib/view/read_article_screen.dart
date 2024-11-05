@@ -73,7 +73,8 @@ class _ReadArticleScreenState extends State<ReadArticleScreen> {
                                     size: 15,
                                   ),
                                   errorWidget: (context, url, error) =>
-                                      Image.asset(Assets.images.a1.path),
+                                      const Icon(
+                                          Icons.image_not_supported_outlined),
                                 ),
                               ),
                               Container(
@@ -207,11 +208,11 @@ class _ReadArticleScreenState extends State<ReadArticleScreen> {
         itemBuilder: (context, index) {
           return InkWell(
             onTap: () async {
-
               articleModelController.selectedTagName.value =
                   readArticleScreenController.tagsList[index].title;
-              articleModelController.getArticlesListFromTagId(
-                  readArticleScreenController.tagsList[index].id);
+              articleModelController.tagId.value =
+                  int.parse(readArticleScreenController.tagsList[index].id);
+              articleModelController.getArticlesListFromTagId();
               Get.to(ShowArticleListFromTagId());
             },
             child: Padding(
@@ -287,7 +288,7 @@ class _ReadArticleScreenState extends State<ReadArticleScreen> {
                               size: 15,
                             ),
                             errorWidget: (context, url, error) =>
-                                Image.asset(Assets.images.a1.path),
+                                const Icon(Icons.image_not_supported_outlined),
                           ),
                         ),
                         Container(
