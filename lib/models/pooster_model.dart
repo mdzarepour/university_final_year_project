@@ -1,4 +1,4 @@
-import 'package:tech_blog/components/api_constants.dart';
+import 'package:tech_blog/components/constants/api_constants.dart';
 
 class PoosterModel {
   String? id;

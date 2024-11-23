@@ -1,7 +1,8 @@
 name: tech_blog
+
 description: "content sharing platform"
 
-publish_to: "none" # Remove this line if you wish to publish to pub.dev
+publish_to: "none"
 
 version: 1.0.0+1
 
@@ -25,24 +26,21 @@ dependencies:
   dio: ^5.7.0
   cached_network_image: ^3.4.1
   flutter_widget_from_html: ^0.15.2
+  get_storage: ^2.1.1
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
   build_runner:
   flutter_gen_runner:
-
   flutter_lints: ^4.0.0
 
 flutter:
   uses-material-design: true
-
-  # To add assets to your application, add an assets section, like this:
   assets:
     - assets/images/
     - assets/icons/
 
-  # example:
   fonts:
     - family: vazir
       fonts:

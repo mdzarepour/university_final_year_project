@@ -1,11 +1,11 @@
 import 'package:get/get.dart';
 import 'dart:developer' as developer;
-import 'package:tech_blog/components/api_constants.dart';
+import 'package:tech_blog/components/constants/api_constants.dart';
 import 'package:tech_blog/models/article_info_model.dart';
 import 'package:tech_blog/models/article_model.dart';
 import 'package:tech_blog/models/tags_model.dart';
 import 'package:tech_blog/services/dio_services.dart';
-import 'package:tech_blog/view/read_article_screen.dart';
+import 'package:tech_blog/view/home_page/read_article_screen.dart';
 
 class ReadArticleScreenController extends GetxController {
   var articleInfoModel = ArticleInfoModel().obs;
@@ -22,7 +22,8 @@ class ReadArticleScreenController extends GetxController {
         '${ApiConstants.baseUrl}article/get.php?command=info&id=${id.value}&user_id=$userId',
       );
       if (response.statusCode == 200) {
-        articleInfoModel.value = ArticleInfoModel.fromJson(response.data["info"]);
+        articleInfoModel.value =
+            ArticleInfoModel.fromJson(response.data["info"]);
         isFavorite.value = response.data["isFavorite"];
         relatedArticlesList.assignAll(
           (response.data["related"] as List)
@@ -34,7 +35,8 @@ class ReadArticleScreenController extends GetxController {
               .map((element) => TagsModel.fromJson(element))
               .toList(),
         );
-        Get.to(() => const ReadArticleScreen(), transition: Transition.cupertino);
+        Get.to(() => const ReadArticleScreen(),
+            transition: Transition.cupertino);
       } else {
         developer.log('Error: ${response.statusCode}');
       }

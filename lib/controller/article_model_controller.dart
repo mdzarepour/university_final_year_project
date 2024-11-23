@@ -1,6 +1,6 @@
 import 'dart:developer' as developer;
 import 'package:get/get.dart';
-import 'package:tech_blog/components/api_constants.dart';
+import 'package:tech_blog/components/constants/api_constants.dart';
 import 'package:tech_blog/models/article_model.dart';
 import 'package:tech_blog/services/dio_services.dart';
 

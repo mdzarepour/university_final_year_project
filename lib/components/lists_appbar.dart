@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:hugeicons/hugeicons.dart';
-import 'package:tech_blog/components/project_colors.dart';
+import 'package:tech_blog/components/constants/project_colors.dart';
 
 PreferredSize listsAppbar(BuildContext context, String title) {
   return PreferredSize(

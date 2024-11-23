@@ -1,6 +1,6 @@
 import 'dart:developer' as developer;
 import 'package:get/get.dart';
-import 'package:tech_blog/components/api_constants.dart';
+import 'package:tech_blog/components/constants/api_constants.dart';
 import 'package:tech_blog/models/article_model.dart';
 import 'package:tech_blog/models/podcast_model.dart';
 import 'package:tech_blog/models/pooster_model.dart';
@@ -19,6 +19,7 @@ class HomeScreenController extends GetxController {
     super.onInit();
     getHomeItemsData();
   }
+
   Future<void> getHomeItemsData() async {
     loading.value = true;
     try {

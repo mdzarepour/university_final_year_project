@@ -1,9 +1,8 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
-import 'package:tech_blog/components/project_colors.dart';
+import 'package:tech_blog/components/constants/project_colors.dart';
 import 'package:tech_blog/controller/home_screen_controller.dart';
-import 'package:tech_blog/gen/assets.gen.dart';
 
 class TopPodcastsListItem extends StatelessWidget {
   final BuildContext context;
@@ -44,7 +43,7 @@ class TopPodcastsListItem extends StatelessWidget {
                 color: SolidColors.purpleButtomColor2,
               ),
               errorWidget: (context, url, error) =>
-                  Icon(Icons.image_not_supported_outlined),
+                  const Icon(Icons.image_not_supported_outlined),
             ),
           ),
           Text(
@@ -52,7 +51,7 @@ class TopPodcastsListItem extends StatelessWidget {
                   .textTheme
                   .bodySmall
                   ?.copyWith(color: SolidColors.blackTitles),
-              controller.topPodcastList[index].author),
+              controller.topPodcastList[index].title),
         ],
       ),
     );

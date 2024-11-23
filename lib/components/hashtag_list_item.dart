@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:tech_blog/components/project_colors.dart';
+import 'package:tech_blog/components/constants/project_colors.dart';
 import 'package:tech_blog/controller/home_screen_controller.dart';
 
 class HashtagListItem extends StatelessWidget {
